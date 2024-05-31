@@ -24,12 +24,12 @@ public class BoardController {
     }
 
     @PostMapping("/board")
-    public Board insertBoard(Board board){
+    public Board insertBoard(@RequestBody Board board){
         return boardService.insertBoard(board);
     }
 
     @PutMapping("/board/{boardSeq}")
-    public Board updateBoard(@PathVariable Integer boardSeq, Board board){
+    public Board updateBoard(@PathVariable Integer boardSeq,@RequestBody Board board){
         board.setBoardSeq(boardSeq);
 
         return boardService.updateBoard(board);

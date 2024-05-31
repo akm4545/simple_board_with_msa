@@ -17,12 +17,12 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User insertUser(User user) {
+    public User insertUser(@RequestBody User user) {
         return userService.insertUser(user);
     }
 
     @PutMapping("/user/{userSeq}")
-    public User updateUser(@PathVariable Integer userSeq, User user){
+    public User updateUser(@PathVariable Integer userSeq, @RequestBody User user){
         user.setUserSeq(userSeq);
 
         return userService.updateUser(user);

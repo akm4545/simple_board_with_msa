@@ -24,12 +24,12 @@ public class ReplyController {
     }
 
     @PostMapping("/reply")
-    public Reply insertReply(Reply reply){
+    public Reply insertReply(@RequestBody Reply reply){
         return replyService.insertReplyList(reply);
     }
 
     @PutMapping("/reply/{replySeq}")
-    public Reply updateReply(@PathVariable Integer replySeq, Reply reply){
+    public Reply updateReply(@PathVariable Integer replySeq,@RequestBody Reply reply){
         reply.setReplySeq(replySeq);
         return replyService.updateReply(reply);
     }

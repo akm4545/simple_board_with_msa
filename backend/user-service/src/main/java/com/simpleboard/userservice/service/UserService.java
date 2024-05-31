@@ -18,6 +18,8 @@ public class UserService {
 
     @Transactional
     public User insertUser(User user) {
+        System.out.println(user);
+
         return userRepository.save(user);
     }
 

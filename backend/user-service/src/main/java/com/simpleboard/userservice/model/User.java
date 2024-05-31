@@ -12,6 +12,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @DynamicUpdate
 @Table(name = "user")
+@ToString
 public class User {
 
     @Id
