@@ -1,5 +1,8 @@
 package com.simpleboard.userservice.service;
 
+import com.simpleboard.userservice.dto.UserRequestDto;
+import com.simpleboard.userservice.dto.UserSeqRequestDto;
+import com.simpleboard.userservice.dto.UserResponseDto;
 import com.simpleboard.userservice.model.User;
 import com.simpleboard.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,30 +15,40 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    public User selectUser(Integer userSeq) {
-        return userRepository.findById(userSeq).get();
+    public UserResponseDto selectUser(UserSeqRequestDto requestDto) {
+        User user = userRepository.findById(requestDto.getUserSeq()).get();
+
+        return new UserResponseDto(user);
     }
 
     @Transactional
-    public User insertUser(User user) {
-        System.out.println(user);
+    public UserResponseDto insertUser(UserRequestDto requestDto) {
+        User user = new User();
 
-        return userRepository.save(user);
+        user.setUserId(requestDto.getUserId());
+        user.setUserName(requestDto.getUserName());
+        user.setUserPassword(requestDto.getUserPassword());
+
+        UserResponseDto responseDto = new UserResponseDto(userRepository.save(user));
+
+        return responseDto;
     }
 
     @Transactional
-    public User updateUser(User user) {
-        User updateUser = userRepository.findById(user.getUserSeq()).get();
+    public UserResponseDto updateUser(UserRequestDto requestDto) {
+        User updateUser = userRepository.findById(requestDto.getUserSeq()).get();
 
-        updateUser.setUserName(user.getUserName());
-        updateUser.setUserPassword(user.getUserPassword());
-        updateUser.setUserName(user.getUserName());
+        updateUser.setUserName(requestDto.getUserName());
+        updateUser.setUserPassword(requestDto.getUserPassword());
+        updateUser.setUserName(requestDto.getUserName());
 
-        return updateUser;
+        UserResponseDto responseDto = new UserResponseDto(updateUser);
+
+        return responseDto;
     }
 
     @Transactional
-    public void deleteUser(Integer userSeq) {
-        userRepository.deleteById(userSeq);
+    public void deleteUser(UserSeqRequestDto requestDto) {
+        userRepository.deleteById(requestDto.getUserSeq());
     }
 }

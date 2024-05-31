@@ -1,8 +1,12 @@
 package com.simpleboard.userservice.controller;
 
+import com.simpleboard.userservice.dto.UserRequestDto;
+import com.simpleboard.userservice.dto.UserSeqRequestDto;
+import com.simpleboard.userservice.dto.UserResponseDto;
 import com.simpleboard.userservice.model.User;
 import com.simpleboard.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,24 +16,36 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user/{userSeq}")
-    public User selectUser(@PathVariable Integer userSeq) {
-        return userService.selectUser(userSeq);
+    public ResponseEntity<UserResponseDto> selectUser(@PathVariable Integer userSeq) {
+        UserSeqRequestDto requestDto = UserSeqRequestDto.builder()
+                .userSeq(userSeq)
+                .build();
+
+        return ResponseEntity.ok(userService.selectUser(requestDto));
     }
 
     @PostMapping("/user")
-    public User insertUser(@RequestBody User user) {
-        return userService.insertUser(user);
+    public ResponseEntity<UserResponseDto> insertUser(@RequestBody UserRequestDto requestDto) {
+        UserResponseDto responseDto = userService.insertUser(requestDto);
+
+        return ResponseEntity.ok(responseDto);
+
     }
 
     @PutMapping("/user/{userSeq}")
-    public User updateUser(@PathVariable Integer userSeq, @RequestBody User user){
-        user.setUserSeq(userSeq);
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Integer userSeq, @RequestBody UserRequestDto requestDto){
+        requestDto.setUserSeq(userSeq);
+        UserResponseDto responseDto = userService.updateUser(requestDto);
 
-        return userService.updateUser(user);
+        return ResponseEntity.ok(responseDto);
     }
 
     @DeleteMapping("/user/{userSeq}")
     public void deleteUser(@PathVariable Integer userSeq){
-        userService.deleteUser(userSeq);
+        UserSeqRequestDto requestDto = UserSeqRequestDto.builder()
+                .userSeq(userSeq)
+                .build();
+
+        userService.deleteUser(requestDto);
     }
 }
