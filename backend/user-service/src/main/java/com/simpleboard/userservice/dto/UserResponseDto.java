@@ -1,12 +1,13 @@
 package com.simpleboard.userservice.dto;
 
 import com.simpleboard.userservice.model.User;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 @Data
 @Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 //HATEOAS 구현을 위해 상속
 public class UserResponseDto extends RepresentationModel<UserResponseDto> {
     private Integer userSeq;

@@ -100,7 +100,7 @@ public class UserController {
                         .withRel("insertUser"),
                 linkTo(methodOn(UserController.class)
                         .updateUser(requestDto.getUserSeq(), UserRequestDto.builder().build()))
-                        .withSelfRel(),
+                        .withRel("updateUser"),
                 linkTo(methodOn(UserController.class)
                         .deleteUser(requestDto.getUserSeq()))
                         .withSelfRel());
