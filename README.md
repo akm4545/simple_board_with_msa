@@ -7,4 +7,8 @@
   각 서비스의 응답과 함께 가능한 다음 단계 정보도 제공 클라이언트를 다음 단계로 가이드
 5. 컨피그 서버를 구축한다 (아래 의존성 추가하여 프로젝트 생성)
   - Spring boot Actuator
-  - Spring colud
+  - Spring Colud Config Server
+6. 컨피그 서버에서 /src/main/resource 폴더에 application.yml 파일 생성
+7. 컨피그 서버 Application 클래스에 @EnableConfigServer 추가
+8. application.yml 작성 /src/main/resource/config 에 프로젝트명-프로필명.yml 파일을 만들고 작성 후 프로젝트 구동한 다음 http://localhost:8071/프로젝트명/프로필명을 실행하여
+  정상 작동하는지 테스트
