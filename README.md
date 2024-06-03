@@ -12,3 +12,4 @@
 7. 컨피그 서버 Application 클래스에 @EnableConfigServer 추가
 8. application.yml 작성 /src/main/resource/config 에 프로젝트명-프로필명.yml 파일을 만들고 작성 후 프로젝트 구동한 다음 http://localhost:8071/프로젝트명/프로필명을 실행하여
   정상 작동하는지 테스트
+9. 구동 서비스들에게 spring cloud 의존성을 주입한다
