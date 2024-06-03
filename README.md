@@ -8,3 +8,4 @@
 5. 컨피그 서버를 구축한다 (아래 의존성 추가하여 프로젝트 생성)
   - Spring boot Actuator
   - Spring colud
+6. 컨피그 서버에서 /src/main/resource 폴더에 bootstrap.yml 파일 생성 
