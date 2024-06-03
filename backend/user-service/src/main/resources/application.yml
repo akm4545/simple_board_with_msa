@@ -5,3 +5,14 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+spring:
+  application:
+    name: user-service
+  config:
+    import: "optional:configserver:http://localhost:8071"
+#  이 외에도 git 사용 vault를 사용할 수 있다
+  #  이전버전
+#  cloud:
+#    config:
+#      uri: http://localhost:8071

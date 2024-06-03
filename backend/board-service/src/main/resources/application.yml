@@ -5,3 +5,9 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+spring:
+  application:
+    name: board-service
+  config:
+    import: "optional:configserver:http://localhost:8071"
