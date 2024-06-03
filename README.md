@@ -5,3 +5,6 @@
 4. HATEOAS 의존성 추가
   HATEOAS = HATEOAS원칙(해당 리소스와 관련된 링크를 표시하는)을 준수하는 API를 생성
   각 서비스의 응답과 함께 가능한 다음 단계 정보도 제공 클라이언트를 다음 단계로 가이드
+5. 컨피그 서버를 구축한다 (아래 의존성 추가하여 프로젝트 생성)
+  - Spring boot Actuator
+  - Spring colud
