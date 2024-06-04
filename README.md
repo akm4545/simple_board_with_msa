@@ -19,3 +19,10 @@
 12. application.yml 에서 액추에이터 설정을 통해 refresh 엔드포인트를 노출시키는 설정을 넣어야 한다
 13. 컨피그 서버에서 데이터 암호화 키를 넣고 민감정보를 암호화 한다 (/encrypt 엔드포인트로 암호화할 데이터 넣고 요청) 
 14. 암호화된 데이터는 "{chiper}암호화된 데이터" 형식으로 입력해야 한다
+15. 서비스 디스커버리 서버 생성
+    서비스 디스커버리 = 서비스의 물리적 위치를 수동으로 구성할 필요 없이 위치를 알려 줄 수 있는 아키텍처 구축
+    - Spring boot Actuator
+    - Spring cloud starter config
+    - Spring cloud starter netflix eureka server
+    - ribbon-eureka
+    - spring cloud starter loadbalancer
