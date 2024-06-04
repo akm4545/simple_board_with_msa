@@ -16,3 +16,8 @@ spring:
 #  cloud:
 #    config:
 #      uri: http://localhost:8071
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
