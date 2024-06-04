@@ -21,3 +21,8 @@
 14. 암호화된 데이터는 "{chiper}암호화된 데이터" 형식으로 입력해야 한다
 15. 서비스 디스커버리 서버 생성
     서비스 디스커버리 = 서비스의 물리적 위치를 수동으로 구성할 필요 없이 위치를 알려 줄 수 있는 아키텍처 구축
+    - Spring boot Actuator
+    - Spring cloud starter config
+    - Spring cloud starter netflix eureka server
+    - ribbon-eureka
+    - spring cloud starter loadbalancer
