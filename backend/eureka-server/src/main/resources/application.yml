@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: eureka-server
+  config:
+    import: "optional:configserver:http://localhost:8071"
+  cloud:
+    loadbalancer:
+#      리본이 클라이언트 측 기본 로드 밸런서이므로 비활성화
+      ribbon:
+        enabled: false
