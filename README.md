@@ -28,3 +28,5 @@
     - spring cloud starter loadbalancer
 16. 컨피그 서버에 서비스 디스커버리 서버의 설정 파일을 작성한다
 17. 서비스 디스커버리 서버에 유레카 설정 yml 작성 후 @EnableEurekaServer 어노테이션을 Application 클래스에 선언하여 유레카 서비스를 활성화한다
+18. 서비스들에 eureka-client 의존성을 추가
+19. 컨피그 서버의 서비스들 application.yml 파일에 유레카 클라이언트 설정 정보를 넣는다
