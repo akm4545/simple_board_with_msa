@@ -30,3 +30,8 @@
 17. 서비스 디스커버리 서버에 유레카 설정 yml 작성 후 @EnableEurekaServer 어노테이션을 Application 클래스에 선언하여 유레카 서비스를 활성화한다
 18. 서비스들에 eureka-client 의존성을 추가
 19. 컨피그 서버의 서비스들 application.yml 파일에 유레카 클라이언트 설정 정보를 넣는다
+20. 컨피그 서버 -> 유레카 서버 -> 서비스 서버 순으로 구동 후 유레카에 서비스가 등록될때까지 (30초) 기다린 후
+  http://<eureka service>:<port>/eureka/apps/<APPID> ex) http://localhost:8070/eureka/apps/user-service
+  http://<eureka service>:<port>
+  를 호출해서 정상 등록되었는지 확인한다
+  
