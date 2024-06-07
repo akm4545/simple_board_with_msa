@@ -18,3 +18,16 @@ spring:
     url: "{cipher}1d31922a1680e0dda2eacfd794007253c1c36f5f75afd3902d4637c5c218b960"
     username: "{cipher}9231db624ce6b7cc0d476f1a345a59a1b268177495f2749fb3ac1b0267a46ae4"
     password: "{cipher}9d9a02723faa05bef29ecd10b1635ff28dd0b948f2fe85497b98ee2ce7bbf42a"
+eureka:
+  instance:
+    #    서비스 이름 대신 서비스 IP 주소 등록
+    preferIpAddress: true
+  client:
+    #    유레카 서비스 등록 여부
+    registerWithEureka: true
+    #    레지스트리 사본을 로컬에 내려받기
+    fetchRegistry: true
+    #    유레카 서비스의 위치 설정
+    serviceUrl:
+      defaultZone:
+        http://localhost:8070/eureka/
