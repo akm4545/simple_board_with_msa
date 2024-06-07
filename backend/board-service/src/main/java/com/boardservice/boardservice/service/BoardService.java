@@ -1,8 +1,8 @@
 package com.boardservice.boardservice.service;
 
-import com.boardservice.boardservice.dto.BoardRequestDto;
-import com.boardservice.boardservice.dto.BoardResponseDto;
-import com.boardservice.boardservice.dto.BoardSeqRequestDto;
+import com.boardservice.boardservice.dto.board.BoardRequestDto;
+import com.boardservice.boardservice.dto.board.BoardResponseDto;
+import com.boardservice.boardservice.dto.board.BoardSeqRequestDto;
 import com.boardservice.boardservice.model.Board;
 import com.boardservice.boardservice.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

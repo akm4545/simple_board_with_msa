@@ -1,8 +1,8 @@
 package com.replyservice.replyservice.service;
 
-import com.replyservice.replyservice.dto.ReplyRequestDto;
-import com.replyservice.replyservice.dto.ReplyResponseDto;
-import com.replyservice.replyservice.dto.ReplySeqRequestDto;
+import com.replyservice.replyservice.dto.reply.ReplyRequestDto;
+import com.replyservice.replyservice.dto.reply.ReplyResponseDto;
+import com.replyservice.replyservice.dto.reply.ReplySeqRequestDto;
 import com.replyservice.replyservice.model.Reply;
 import com.replyservice.replyservice.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

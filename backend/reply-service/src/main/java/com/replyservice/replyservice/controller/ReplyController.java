@@ -1,9 +1,8 @@
 package com.replyservice.replyservice.controller;
 
-import com.replyservice.replyservice.dto.ReplyRequestDto;
-import com.replyservice.replyservice.dto.ReplyResponseDto;
-import com.replyservice.replyservice.dto.ReplySeqRequestDto;
-import com.replyservice.replyservice.model.Reply;
+import com.replyservice.replyservice.dto.reply.ReplyRequestDto;
+import com.replyservice.replyservice.dto.reply.ReplyResponseDto;
+import com.replyservice.replyservice.dto.reply.ReplySeqRequestDto;
 import com.replyservice.replyservice.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

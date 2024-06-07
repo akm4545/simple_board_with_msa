@@ -1,4 +1,4 @@
-package com.replyservice.replyservice.dto;
+package com.replyservice.replyservice.dto.reply;
 
 import lombok.Builder;
 import lombok.Data;

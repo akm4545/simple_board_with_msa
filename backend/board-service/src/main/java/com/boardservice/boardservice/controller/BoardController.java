@@ -1,9 +1,8 @@
 package com.boardservice.boardservice.controller;
 
-import com.boardservice.boardservice.dto.BoardRequestDto;
-import com.boardservice.boardservice.dto.BoardResponseDto;
-import com.boardservice.boardservice.dto.BoardSeqRequestDto;
-import com.boardservice.boardservice.model.Board;
+import com.boardservice.boardservice.dto.board.BoardRequestDto;
+import com.boardservice.boardservice.dto.board.BoardResponseDto;
+import com.boardservice.boardservice.dto.board.BoardSeqRequestDto;
 import com.boardservice.boardservice.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

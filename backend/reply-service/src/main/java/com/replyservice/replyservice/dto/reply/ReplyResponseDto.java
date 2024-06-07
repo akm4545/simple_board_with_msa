@@ -1,4 +1,4 @@
-package com.replyservice.replyservice.dto;
+package com.replyservice.replyservice.dto.reply;
 
 import com.replyservice.replyservice.model.Reply;
 import lombok.AllArgsConstructor;
