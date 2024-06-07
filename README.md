@@ -36,4 +36,5 @@
   를 호출해서 정상 등록되었는지 확인한다
 21. 서비스 디스커버리에 등록된 url을 가져오기 위해 서비스들에 feign 의존성을 추가하고 Application 클래스에 @EnableFeignClient 어노테이션을 추가한다
 22. 서비스들에 필요한 FeignClient 인터페이스를 정의한다.
+23. 현재 프로젝트에서는 board-service와 reply-service가 외부 서비스가 필요하므로 해당 서비스들에만 정의
   
