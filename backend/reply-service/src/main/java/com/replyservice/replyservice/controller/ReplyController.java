@@ -32,7 +32,7 @@ public class ReplyController {
                 .selectReply(replySeq))
                 .withSelfRel(),
                 linkTo(methodOn(ReplyController.class)
-                        .selectReplyList())
+                        .selectReplyList(0))
                         .withRel("selectReplyList"),
                 linkTo(methodOn(ReplyController.class)
                         .insertReply(ReplyRequestDto.builder().build()))
@@ -47,15 +47,15 @@ public class ReplyController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/reply/list")
-    public ResponseEntity<List<ReplyResponseDto>> selectReplyList(){
-        List<ReplyResponseDto> responseDtoList = replyService.selectReplyList();
+    @GetMapping("/board/{boardSeq}/reply/list")
+    public ResponseEntity<List<ReplyResponseDto>> selectReplyList(@PathVariable Integer boardSeq){
+        List<ReplyResponseDto> responseDtoList = replyService.selectReplyList(boardSeq);
 
         responseDtoList.forEach(responseDto -> responseDto.add(linkTo(methodOn(ReplyController.class)
                         .selectReply(responseDto.getReplySeq()))
                         .withRel("selectReply"),
                 linkTo(methodOn(ReplyController.class)
-                        .selectReplyList())
+                        .selectReplyList(boardSeq))
                         .withSelfRel(),
                 linkTo(methodOn(ReplyController.class)
                         .insertReply(ReplyRequestDto.builder().build()))
@@ -79,7 +79,7 @@ public class ReplyController {
                         .selectReply(requestDto.getReplySeq()))
                         .withRel("selectReply"),
                 linkTo(methodOn(ReplyController.class)
-                        .selectReplyList())
+                        .selectReplyList(0))
                         .withRel("selectReplyList"),
                 linkTo(methodOn(ReplyController.class)
                         .insertReply(ReplyRequestDto.builder().build()))
@@ -104,7 +104,7 @@ public class ReplyController {
                         .selectReply(replySeq))
                         .withRel("selectReply"),
                 linkTo(methodOn(ReplyController.class)
-                        .selectReplyList())
+                        .selectReplyList(0))
                         .withRel("selectReplyList"),
                 linkTo(methodOn(ReplyController.class)
                         .insertReply(ReplyRequestDto.builder().build()))
@@ -133,7 +133,7 @@ public class ReplyController {
                         .selectReply(replySeq))
                         .withRel("selectReply"),
                 linkTo(methodOn(ReplyController.class)
-                        .selectReplyList())
+                        .selectReplyList(0))
                         .withRel("selectReplyList"),
                 linkTo(methodOn(ReplyController.class)
                         .insertReply(ReplyRequestDto.builder().build()))

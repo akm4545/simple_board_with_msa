@@ -25,8 +25,8 @@ public class ReplyService {
         return responseDto;
     }
 
-    public List<ReplyResponseDto> selectReplyList() {
-        List<Reply> replyList = replyRepository.findAll();
+    public List<ReplyResponseDto> selectReplyList(Integer boardSeq) {
+        List<Reply> replyList = replyRepository.findByBoardSeq(boardSeq);
         List<ReplyResponseDto> responseDtoList = replyList.stream().map(ReplyResponseDto::new).toList();
 
         return responseDtoList;

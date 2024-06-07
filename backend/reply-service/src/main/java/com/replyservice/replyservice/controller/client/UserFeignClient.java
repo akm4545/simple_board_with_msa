@@ -1,7 +1,9 @@
 package com.replyservice.replyservice.controller.client;
 
+import com.replyservice.replyservice.dto.user.UserListRequestDto;
 import com.replyservice.replyservice.dto.user.UserResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,5 +15,5 @@ public interface UserFeignClient {
 
     @ResponseBody
     @PostMapping("/user/list")
-    List<UserResponseDto> selectUserList(@RequestBody List<Integer> userSeqList);
+    ResponseEntity<List<UserResponseDto>> selectUserList(@RequestBody UserListRequestDto requestDto);
 }

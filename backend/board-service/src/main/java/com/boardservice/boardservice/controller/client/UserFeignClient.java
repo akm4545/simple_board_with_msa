@@ -1,7 +1,9 @@
 package com.boardservice.boardservice.controller.client;
 
+import com.boardservice.boardservice.dto.user.UserListRequestDto;
 import com.boardservice.boardservice.dto.user.UserResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +13,9 @@ public interface UserFeignClient {
 
     @ResponseBody
     @PostMapping("/user/list")
-    List<UserResponseDto> selectUserList(@RequestBody List<Integer> userSeqList);
+    ResponseEntity<List<UserResponseDto>> selectUserList(@RequestBody UserListRequestDto requestDto);
 
     @ResponseBody
     @GetMapping("/user/{userSeq}")
-    UserResponseDto selectUser(@PathVariable("userSeq") Integer userSeq);
+    ResponseEntity<UserResponseDto> selectUser(@PathVariable("userSeq") Integer userSeq);
 }

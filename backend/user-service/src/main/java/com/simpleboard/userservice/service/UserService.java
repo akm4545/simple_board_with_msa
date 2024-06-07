@@ -1,5 +1,6 @@
 package com.simpleboard.userservice.service;
 
+import com.simpleboard.userservice.dto.UserListRequestDto;
 import com.simpleboard.userservice.dto.UserRequestDto;
 import com.simpleboard.userservice.dto.UserSeqRequestDto;
 import com.simpleboard.userservice.dto.UserResponseDto;
@@ -8,6 +9,8 @@ import com.simpleboard.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +53,12 @@ public class UserService {
     @Transactional
     public void deleteUser(UserSeqRequestDto requestDto) {
         userRepository.deleteById(requestDto.getUserSeq());
+    }
+
+    public List<UserResponseDto> selectUserList(UserListRequestDto requestDto) {
+        List<User> userList = userRepository.findAllById(requestDto.getUserSeqList());
+        List<UserResponseDto> responseDtoList = userList.stream().map(UserResponseDto::new).toList();
+
+        return responseDtoList;
     }
 }

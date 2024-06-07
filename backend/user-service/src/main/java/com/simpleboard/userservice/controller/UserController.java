@@ -1,5 +1,6 @@
 package com.simpleboard.userservice.controller;
 
+import com.simpleboard.userservice.dto.UserListRequestDto;
 import com.simpleboard.userservice.dto.UserRequestDto;
 import com.simpleboard.userservice.dto.UserSeqRequestDto;
 import com.simpleboard.userservice.dto.UserResponseDto;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 //HATEOAS 사용을 위해 import
+import java.util.List;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
@@ -41,6 +44,13 @@ public class UserController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @PostMapping("/user/list")
+    public ResponseEntity<List<UserResponseDto>> selectUserList(@RequestBody UserListRequestDto requestDto) {
+        List<UserResponseDto> responseDtoList = userService.selectUserList(requestDto);
+
+        return ResponseEntity.ok(responseDtoList);
+    }
+
     @PostMapping("/user")
     public ResponseEntity<UserResponseDto> insertUser(@RequestBody UserRequestDto requestDto) {
         UserResponseDto responseDto = userService.insertUser(requestDto);
@@ -58,7 +68,6 @@ public class UserController {
                         .withRel("deleteUser"));
 
         return ResponseEntity.ok(responseDto);
-
     }
 
     @PutMapping("/user/{userSeq}")
