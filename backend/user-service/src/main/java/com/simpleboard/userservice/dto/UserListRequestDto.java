@@ -1,12 +1,12 @@
 package com.simpleboard.userservice.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserListRequestDto {
     private List<Integer> userSeqList;
 }
