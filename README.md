@@ -38,4 +38,6 @@
 22. 서비스들에 필요한 FeignClient 인터페이스를 정의한다.
 23. 현재 프로젝트에서는 board-service와 reply-service가 외부 서비스가 필요하므로 해당 서비스들에만 정의
 24. 클라이언트 회복성을 위한 Resilience4j (마이크로서비스 회복성 패턴 구현) 의존성을 서비스들에 추가
+   - resilience4j
+   - spring-boot-starter-aop
   
