@@ -19,41 +19,11 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @GetMapping("/reply/{replySeq}")
-    public ResponseEntity<ReplyResponseDto> selectReply(@PathVariable Integer replySeq){
-        ReplySeqRequestDto requestDto = ReplySeqRequestDto.builder()
-                .replySeq(replySeq)
-                .build();
-
-        ReplyResponseDto responseDto = replyService.selectReply(requestDto);
-
-//        HATEOAS 설정
-        responseDto.add(linkTo(methodOn(ReplyController.class)
-                .selectReply(replySeq))
-                .withSelfRel(),
-                linkTo(methodOn(ReplyController.class)
-                        .selectReplyList(0))
-                        .withRel("selectReplyList"),
-                linkTo(methodOn(ReplyController.class)
-                        .insertReply(ReplyRequestDto.builder().build()))
-                        .withRel("insertReply"),
-                linkTo(methodOn(ReplyController.class)
-                        .updateReply(replySeq, ReplyRequestDto.builder().build()))
-                        .withRel("updateReply"),
-                linkTo(methodOn(ReplyController.class)
-                        .deleteReply(replySeq))
-                        .withRel("deleteReply"));
-
-        return ResponseEntity.ok(responseDto);
-    }
-
     @GetMapping("/board/{boardSeq}/reply/list")
     public ResponseEntity<List<ReplyResponseDto>> selectReplyList(@PathVariable Integer boardSeq){
         List<ReplyResponseDto> responseDtoList = replyService.selectReplyList(boardSeq);
 
-        responseDtoList.forEach(responseDto -> responseDto.add(linkTo(methodOn(ReplyController.class)
-                        .selectReply(responseDto.getReplySeq()))
-                        .withRel("selectReply"),
+        responseDtoList.forEach(responseDto -> responseDto.add(
                 linkTo(methodOn(ReplyController.class)
                         .selectReplyList(boardSeq))
                         .withSelfRel(),
@@ -76,9 +46,6 @@ public class ReplyController {
         ReplyResponseDto responseDto = replyService.insertReplyList(requestDto);
 
         responseDto.add(linkTo(methodOn(ReplyController.class)
-                        .selectReply(requestDto.getReplySeq()))
-                        .withRel("selectReply"),
-                linkTo(methodOn(ReplyController.class)
                         .selectReplyList(0))
                         .withRel("selectReplyList"),
                 linkTo(methodOn(ReplyController.class)
@@ -101,9 +68,6 @@ public class ReplyController {
         ReplyResponseDto responseDto = replyService.updateReply(requestDto);
 
         responseDto.add(linkTo(methodOn(ReplyController.class)
-                        .selectReply(replySeq))
-                        .withRel("selectReply"),
-                linkTo(methodOn(ReplyController.class)
                         .selectReplyList(0))
                         .withRel("selectReplyList"),
                 linkTo(methodOn(ReplyController.class)
@@ -130,9 +94,6 @@ public class ReplyController {
         ReplyResponseDto responseDto = ReplyResponseDto.builder().build();
 
         responseDto.add(linkTo(methodOn(ReplyController.class)
-                        .selectReply(replySeq))
-                        .withRel("selectReply"),
-                linkTo(methodOn(ReplyController.class)
                         .selectReplyList(0))
                         .withRel("selectReplyList"),
                 linkTo(methodOn(ReplyController.class)
