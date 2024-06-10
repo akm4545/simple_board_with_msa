@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 @Builder
 public class UserListRequestDto {
-    private List<Integer> userSeq;
+    private List<Integer> userSeqList;
 }

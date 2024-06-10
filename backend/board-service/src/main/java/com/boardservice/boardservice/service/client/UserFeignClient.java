@@ -1,4 +1,4 @@
-package com.boardservice.boardservice.controller.client;
+package com.boardservice.boardservice.service.client;
 
 import com.boardservice.boardservice.dto.user.UserListRequestDto;
 import com.boardservice.boardservice.dto.user.UserResponseDto;

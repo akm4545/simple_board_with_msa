@@ -22,4 +22,6 @@ public class Board {
     private String boardTitle;
 
     private String boardContent;
+
+    private Integer userSeq;
 }

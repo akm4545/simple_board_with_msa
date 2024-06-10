@@ -3,13 +3,21 @@ package com.boardservice.boardservice.service;
 import com.boardservice.boardservice.dto.board.BoardRequestDto;
 import com.boardservice.boardservice.dto.board.BoardResponseDto;
 import com.boardservice.boardservice.dto.board.BoardSeqRequestDto;
+import com.boardservice.boardservice.dto.reply.ReplyResponseDto;
+import com.boardservice.boardservice.dto.user.UserListRequestDto;
+import com.boardservice.boardservice.dto.user.UserResponseDto;
 import com.boardservice.boardservice.model.Board;
 import com.boardservice.boardservice.repository.BoardRepository;
+import com.boardservice.boardservice.service.client.ReplyFeignClient;
+import com.boardservice.boardservice.service.client.UserFeignClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,18 +26,41 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
+    private final UserFeignClient userFeignClient;
+
+    private final ReplyFeignClient replyFeignClient;
+
     public BoardResponseDto selectBoard(BoardSeqRequestDto requestDto) {
         Board board = boardRepository.findById(requestDto.getBoardSeq()).get();
+        ResponseEntity<UserResponseDto> userResponse = userFeignClient.selectUser(board.getUserSeq());
+        ResponseEntity<List<ReplyResponseDto>> replyResponse = replyFeignClient.selectReplyList(board.getBoardSeq());
 
-        BoardResponseDto responseDto = new BoardResponseDto(board);
+        UserResponseDto userResponseDto = userResponse.getBody();
+        List<ReplyResponseDto> replyResponseDtoList = replyResponse.getBody();
+
+        BoardResponseDto responseDto = new BoardResponseDto(board, userResponseDto, replyResponseDtoList);
 
         return responseDto;
     }
 
     public List<BoardResponseDto> selectBoardList() {
         List<Board> boardList = boardRepository.findAll();
+        List<Integer> userSeqList = boardList.stream().map(Board::getUserSeq).toList();
+        UserListRequestDto userRequestDto = UserListRequestDto.builder()
+                .userSeqList(userSeqList)
+                .build();
 
-        List<BoardResponseDto> responseDtoList = boardList.stream().map(BoardResponseDto::new).toList();
+        ResponseEntity<List<UserResponseDto>> userListResponse = userFeignClient.selectUserList(userRequestDto);
+        Map<Integer, UserResponseDto> userMap = userListResponse.getBody().stream().collect(Collectors.toMap(
+                UserResponseDto::getUserSeq,
+                value -> value
+        ));
+
+        List<BoardResponseDto> responseDtoList = boardList.stream()
+                .map(board ->
+                        new BoardResponseDto(board, userMap.get(board.getUserSeq()))
+                )
+                .toList();
 
         return responseDtoList;
     }
@@ -40,6 +71,7 @@ public class BoardService {
 
         board.setBoardContent(requestDto.getBoardContent());
         board.setBoardTitle(requestDto.getBoardTitle());
+        board.setUserSeq(requestDto.getUserSeq());
 
         BoardResponseDto responseDto = new BoardResponseDto(boardRepository.save(board));
 

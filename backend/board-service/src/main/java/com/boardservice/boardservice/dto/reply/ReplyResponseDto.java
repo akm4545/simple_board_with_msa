@@ -13,4 +13,10 @@ public class ReplyResponseDto {
     private Integer replySeq;
 
     private String replyContent;
+
+    private Integer boardSeq;
+
+    private Integer userSeq;
+
+    private String userId;
 }

@@ -1,4 +1,4 @@
-package com.replyservice.replyservice.controller.client;
+package com.replyservice.replyservice.service.client;
 
 import com.replyservice.replyservice.dto.user.UserListRequestDto;
 import com.replyservice.replyservice.dto.user.UserResponseDto;

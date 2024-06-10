@@ -1,7 +1,8 @@
-package com.boardservice.boardservice.controller.client;
+package com.boardservice.boardservice.service.client;
 
 import com.boardservice.boardservice.dto.reply.ReplyResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -11,5 +12,5 @@ import java.util.List;
 public interface ReplyFeignClient {
 
     @GetMapping("/board/{boardSeq}/reply/list")
-    List<ReplyResponseDto> selectReplyList(@PathVariable Integer boardSeq);
+    ResponseEntity<List<ReplyResponseDto>> selectReplyList(@PathVariable Integer boardSeq);
 }

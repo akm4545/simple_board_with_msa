@@ -12,4 +12,6 @@ public class BoardRequestDto {
     private String boardTitle;
 
     private String boardContent;
+
+    private Integer userSeq;
 }
