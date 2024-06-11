@@ -27,7 +27,7 @@ public class ReplyService {
 
     private final UserFeignClient userFeignClient;
 
-    @CircuitBreaker(name = "replyService")
+    @CircuitBreaker(name = "replyService", fallbackMethod = "buildFallbackReplyList")
     public List<ReplyResponseDto> selectReplyList(Integer boardSeq) {
         List<Reply> replyList = replyRepository.findByBoardSeq(boardSeq);
         List<Integer> userSeqList = replyList.stream().map(Reply::getUserSeq).toList();
@@ -48,7 +48,7 @@ public class ReplyService {
     }
 
     @Transactional
-    @CircuitBreaker(name = "replyService")
+    @CircuitBreaker(name = "replyService", fallbackMethod = "buildFallbackReply")
     public ReplyResponseDto insertReplyList(ReplyRequestDto requestDto) {
         Reply reply = new Reply();
         reply.setReplyContent(requestDto.getReplyContent());
@@ -61,7 +61,7 @@ public class ReplyService {
     }
 
     @Transactional
-    @CircuitBreaker(name = "replyService")
+    @CircuitBreaker(name = "replyService", fallbackMethod = "buildFallbackReply")
     public ReplyResponseDto updateReply(ReplyRequestDto requestDto) {
         Reply updateReply = replyRepository.findById(requestDto.getReplySeq()).get();
         updateReply.setReplyContent(requestDto.getReplyContent());
@@ -75,5 +75,13 @@ public class ReplyService {
     @CircuitBreaker(name = "replyService")
     public void deleteReply(ReplySeqRequestDto requestDto) {
         replyRepository.deleteById(requestDto.getReplySeq());
+    }
+
+    private ResponseEntity<ReplyRequestDto> buildFallbackReply() {
+        return ResponseEntity.ok(new ReplyRequestDto());
+    }
+
+    private ResponseEntity<List<ReplyResponseDto>> buildFallbackReplyList() {
+        return ResponseEntity.ok(List.of(new ReplyResponseDto()));
     }
 }

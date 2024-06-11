@@ -31,7 +31,7 @@ public class BoardService {
 
     private final ReplyFeignClient replyFeignClient;
 
-    @CircuitBreaker(name = "boardService")
+    @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoard")
     public BoardResponseDto selectBoard(BoardSeqRequestDto requestDto) {
         Board board = boardRepository.findById(requestDto.getBoardSeq()).get();
         ResponseEntity<UserResponseDto> userResponse = userFeignClient.selectUser(board.getUserSeq());
@@ -45,7 +45,7 @@ public class BoardService {
         return responseDto;
     }
 
-    @CircuitBreaker(name = "boardService")
+    @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoardList")
     public List<BoardResponseDto> selectBoardList() {
         List<Board> boardList = boardRepository.findAll();
         List<Integer> userSeqList = boardList.stream().map(Board::getUserSeq).toList();
@@ -69,7 +69,7 @@ public class BoardService {
     }
 
     @Transactional
-    @CircuitBreaker(name = "boardService")
+    @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoard")
     public BoardResponseDto insertBoard(BoardRequestDto requestDto) {
         Board board = new Board();
 
@@ -83,7 +83,7 @@ public class BoardService {
     }
 
     @Transactional
-    @CircuitBreaker(name = "boardService")
+    @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoard")
     public BoardResponseDto updateBoard(BoardRequestDto requestDto) {
         Board updateBoard = boardRepository.findById(requestDto.getBoardSeq()).get();
 
@@ -99,5 +99,13 @@ public class BoardService {
     @CircuitBreaker(name = "boardService")
     public void deleteBoard(BoardSeqRequestDto requestDto) {
         boardRepository.deleteById(requestDto.getBoardSeq());
+    }
+
+    private ResponseEntity<BoardResponseDto> buildFallbackBoard() {
+        return ResponseEntity.ok(new BoardResponseDto());
+    }
+
+    private ResponseEntity<List<BoardResponseDto>> buildFallbackBoardList() {
+        return ResponseEntity.ok(List.of(new BoardResponseDto()));
     }
 }

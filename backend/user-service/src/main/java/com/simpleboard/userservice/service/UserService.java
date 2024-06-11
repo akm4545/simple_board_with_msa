@@ -8,6 +8,7 @@ import com.simpleboard.userservice.model.User;
 import com.simpleboard.userservice.repository.UserRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    @CircuitBreaker(name = "userService")
+    @CircuitBreaker(name = "userService", fallbackMethod = "buildFallbackUser")
     public UserResponseDto selectUser(UserSeqRequestDto requestDto) {
         User user = userRepository.findById(requestDto.getUserSeq()).get();
 
@@ -27,7 +28,7 @@ public class UserService {
     }
 
     @Transactional
-    @CircuitBreaker(name = "userService")
+    @CircuitBreaker(name = "userService", fallbackMethod = "buildFallbackUser")
     public UserResponseDto insertUser(UserRequestDto requestDto) {
         User user = new User();
 
@@ -41,7 +42,7 @@ public class UserService {
     }
 
     @Transactional
-    @CircuitBreaker(name = "userService")
+    @CircuitBreaker(name = "userService", fallbackMethod = "buildFallbackUser")
     public UserResponseDto updateUser(UserRequestDto requestDto) {
         User updateUser = userRepository.findById(requestDto.getUserSeq()).get();
 
@@ -65,5 +66,13 @@ public class UserService {
         List<UserResponseDto> responseDtoList = userList.stream().map(UserResponseDto::new).toList();
 
         return responseDtoList;
+    }
+
+    private ResponseEntity<UserResponseDto> buildFallbackUser() {
+        return ResponseEntity.ok(new UserResponseDto());
+    }
+
+    private ResponseEntity<List<UserResponseDto>> buildFallbackUserList() {
+        return ResponseEntity.ok(List.of(new UserResponseDto()));
     }
 }
