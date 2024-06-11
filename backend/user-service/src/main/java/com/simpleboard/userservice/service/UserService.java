@@ -6,6 +6,7 @@ import com.simpleboard.userservice.dto.UserSeqRequestDto;
 import com.simpleboard.userservice.dto.UserResponseDto;
 import com.simpleboard.userservice.model.User;
 import com.simpleboard.userservice.repository.UserRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    @CircuitBreaker(name = "userService")
     public UserResponseDto selectUser(UserSeqRequestDto requestDto) {
         User user = userRepository.findById(requestDto.getUserSeq()).get();
 
@@ -25,6 +27,7 @@ public class UserService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "userService")
     public UserResponseDto insertUser(UserRequestDto requestDto) {
         User user = new User();
 
@@ -38,6 +41,7 @@ public class UserService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "userService")
     public UserResponseDto updateUser(UserRequestDto requestDto) {
         User updateUser = userRepository.findById(requestDto.getUserSeq()).get();
 
@@ -51,6 +55,7 @@ public class UserService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "userService")
     public void deleteUser(UserSeqRequestDto requestDto) {
         userRepository.deleteById(requestDto.getUserSeq());
     }

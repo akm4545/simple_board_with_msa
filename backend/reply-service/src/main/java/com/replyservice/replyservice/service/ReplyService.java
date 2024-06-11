@@ -8,6 +8,7 @@ import com.replyservice.replyservice.dto.user.UserResponseDto;
 import com.replyservice.replyservice.model.Reply;
 import com.replyservice.replyservice.repository.ReplyRepository;
 import com.replyservice.replyservice.service.client.UserFeignClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class ReplyService {
 
     private final UserFeignClient userFeignClient;
 
+    @CircuitBreaker(name = "replyService")
     public List<ReplyResponseDto> selectReplyList(Integer boardSeq) {
         List<Reply> replyList = replyRepository.findByBoardSeq(boardSeq);
         List<Integer> userSeqList = replyList.stream().map(Reply::getUserSeq).toList();
@@ -46,6 +48,7 @@ public class ReplyService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "replyService")
     public ReplyResponseDto insertReplyList(ReplyRequestDto requestDto) {
         Reply reply = new Reply();
         reply.setReplyContent(requestDto.getReplyContent());
@@ -58,6 +61,7 @@ public class ReplyService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "replyService")
     public ReplyResponseDto updateReply(ReplyRequestDto requestDto) {
         Reply updateReply = replyRepository.findById(requestDto.getReplySeq()).get();
         updateReply.setReplyContent(requestDto.getReplyContent());
@@ -68,6 +72,7 @@ public class ReplyService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "replyService")
     public void deleteReply(ReplySeqRequestDto requestDto) {
         replyRepository.deleteById(requestDto.getReplySeq());
     }

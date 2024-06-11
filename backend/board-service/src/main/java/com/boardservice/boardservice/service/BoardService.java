@@ -10,6 +10,7 @@ import com.boardservice.boardservice.model.Board;
 import com.boardservice.boardservice.repository.BoardRepository;
 import com.boardservice.boardservice.service.client.ReplyFeignClient;
 import com.boardservice.boardservice.service.client.UserFeignClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class BoardService {
 
     private final ReplyFeignClient replyFeignClient;
 
+    @CircuitBreaker(name = "boardService")
     public BoardResponseDto selectBoard(BoardSeqRequestDto requestDto) {
         Board board = boardRepository.findById(requestDto.getBoardSeq()).get();
         ResponseEntity<UserResponseDto> userResponse = userFeignClient.selectUser(board.getUserSeq());
@@ -43,6 +45,7 @@ public class BoardService {
         return responseDto;
     }
 
+    @CircuitBreaker(name = "boardService")
     public List<BoardResponseDto> selectBoardList() {
         List<Board> boardList = boardRepository.findAll();
         List<Integer> userSeqList = boardList.stream().map(Board::getUserSeq).toList();
@@ -66,6 +69,7 @@ public class BoardService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "boardService")
     public BoardResponseDto insertBoard(BoardRequestDto requestDto) {
         Board board = new Board();
 
@@ -79,6 +83,7 @@ public class BoardService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "boardService")
     public BoardResponseDto updateBoard(BoardRequestDto requestDto) {
         Board updateBoard = boardRepository.findById(requestDto.getBoardSeq()).get();
 
@@ -91,6 +96,7 @@ public class BoardService {
     }
 
     @Transactional
+    @CircuitBreaker(name = "boardService")
     public void deleteBoard(BoardSeqRequestDto requestDto) {
         boardRepository.deleteById(requestDto.getBoardSeq());
     }
