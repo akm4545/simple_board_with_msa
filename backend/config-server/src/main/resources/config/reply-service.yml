@@ -31,3 +31,31 @@ eureka:
     serviceUrl:
       defaultZone:
         http://localhost:8070/eureka/
+resilience4j:
+  circuitbreaker:
+    instances:
+      #      회로 차단기 어노테이션에 전달되는 이름과 동일
+      replyService:
+        #        상태 정보 엔드포인트에 대한 구성 정보 노출 여부를 설정
+        registerHealthIndicator: true
+        #        링 버퍼의 닫힌 상태 크기를 설정 (닫힌 상태 = 정상작동 상태) 링 버퍼의 크기 (검사 갯수) = 5
+        #  기본값 = 100
+        ringBufferSizeInClosedState: 5
+        #        링 버퍼의 반열린 상태 크기를 설정 (반열림 상태에서의 호출 수) 반열림 상태 = 다른 링 버퍼를 사용하여 실패율을 평가하고
+        #        이 실패율이 설정된 임계치보다 높으면 회로 차단기는 다시 열린 상태로 변경
+        #        기본값 = 10
+        ringBufferSizeInHalfOpenState: 3
+        #        열린 상태에서 반열린 상태로 변경하기 전 회로 차단기가 대기해야 할 시간 설정
+        #        기본값 = 60,000ms
+        waitDurationInOpenState: 10s
+        #        실패율 임계치의 백분율을 구성한다
+        #        실패율이 임계치보다 크거나 같을 때 회로 차단기는 열린(차단)상태로 변경되고 단란 점검 호출을 시작한다
+        #        기본값 = 50
+        failureRateThreshold: 50
+        #        실패로 간주될 예외 나열
+        #        기본값은 모든 예외는 실패로 기록
+        recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
