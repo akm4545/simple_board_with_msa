@@ -59,6 +59,28 @@ resilience4j:
           - java.io.IOException
           - java.util.concurrent.TimeoutException
           - org.springframework.web.client.ResourceAccessException
+  bulkhead:
+    instances:
+      bulkheadBoardService:
+#      벌크헤드에 들어갈 때 스레드를 차단할 최대 시간을 설정 기본값 = 0
+        maxWaitDuration: 10ms
+#      벌크헤드에서 허용되는 최대 동시 호출 수 설정 기본값 = 25
+        maxConcurrentCalls: 20
+  thread-pool-bulkhead:
+    instances:
+      bulkheadBoardService:
+#        최대 스레드 풀 크기
+#        기본값은 Runtime.getRuntime().availableProcessors()
+        maxThreadPoolSize: 1
+#        코어 스레드 풀 크기
+#        기본값은 Runtime.getRuntime().availableProcessors()
+        coreThreadPoolSize: 1
+#        큐 용량 기본값은 100
+        queueCapacity: 1
+#        유휴 스레드가 종료되기 전에 새 작업을 기다리는 최대 시간을 설정
+#        이 시간은 스레드 수가 코어 스레드 수보다 많을 때 발생
+#        기본값은 20ms
+        keepAliveDuration: 20ms
 
 
 
