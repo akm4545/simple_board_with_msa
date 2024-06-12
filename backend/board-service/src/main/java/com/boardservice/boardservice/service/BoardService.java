@@ -10,6 +10,7 @@ import com.boardservice.boardservice.model.Board;
 import com.boardservice.boardservice.repository.BoardRepository;
 import com.boardservice.boardservice.service.client.ReplyFeignClient;
 import com.boardservice.boardservice.service.client.UserFeignClient;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ public class BoardService {
     private final ReplyFeignClient replyFeignClient;
 
     @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoard")
+    @Bulkhead(name="bulkheadBoardService", fallbackMethod = "buildFallbackBoard")
     public BoardResponseDto selectBoard(BoardSeqRequestDto requestDto) {
         Board board = boardRepository.findById(requestDto.getBoardSeq()).get();
         ResponseEntity<UserResponseDto> userResponse = userFeignClient.selectUser(board.getUserSeq());
@@ -46,6 +48,7 @@ public class BoardService {
     }
 
     @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoardList")
+    @Bulkhead(name="bulkheadBoardService", fallbackMethod = "buildFallbackBoardList")
     public List<BoardResponseDto> selectBoardList() {
         List<Board> boardList = boardRepository.findAll();
         List<Integer> userSeqList = boardList.stream().map(Board::getUserSeq).toList();
@@ -70,6 +73,7 @@ public class BoardService {
 
     @Transactional
     @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoard")
+    @Bulkhead(name="bulkheadBoardService", fallbackMethod = "buildFallbackBoard")
     public BoardResponseDto insertBoard(BoardRequestDto requestDto) {
         Board board = new Board();
 
@@ -84,6 +88,7 @@ public class BoardService {
 
     @Transactional
     @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoard")
+    @Bulkhead(name="bulkheadBoardService", fallbackMethod = "buildFallbackBoard")
     public BoardResponseDto updateBoard(BoardRequestDto requestDto) {
         Board updateBoard = boardRepository.findById(requestDto.getBoardSeq()).get();
 
@@ -97,6 +102,7 @@ public class BoardService {
 
     @Transactional
     @CircuitBreaker(name = "boardService")
+    @Bulkhead(name="bulkheadBoardService")
     public void deleteBoard(BoardSeqRequestDto requestDto) {
         boardRepository.deleteById(requestDto.getBoardSeq());
     }
