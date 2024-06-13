@@ -81,3 +81,13 @@ resilience4j:
           #        이 시간은 스레드 수가 코어 스레드 수보다 많을 때 발생
           #        기본값은 20ms
           keepAliveDuration: 20ms
+  retry:
+    instances:
+      retryReplyService:
+        #        재시도 최대 횟수
+        maxRetryAttempts: 5
+        #        재시도 간 대기 시간
+        waitDuration: 10000
+        #        재시도 대상이 되는 예외 목록
+        retry-exceptions:
+          - java.util.concurrent.TimeoutException
