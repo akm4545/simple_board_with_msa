@@ -8,6 +8,7 @@ import com.simpleboard.userservice.model.User;
 import com.simpleboard.userservice.repository.UserRepository;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     @CircuitBreaker(name = "userService", fallbackMethod = "buildFallbackUser")
     @Bulkhead(name="bulkheadUserService", fallbackMethod = "buildFallbackUser")
+    @Retry(name = "retryUserService", fallbackMethod = "buildFallbackUser")
     public UserResponseDto selectUser(UserSeqRequestDto requestDto) {
         User user = userRepository.findById(requestDto.getUserSeq()).get();
 
@@ -32,6 +34,7 @@ public class UserService {
     @Transactional
     @CircuitBreaker(name = "userService", fallbackMethod = "buildFallbackUser")
     @Bulkhead(name="bulkheadUserService", fallbackMethod = "buildFallbackUser")
+    @Retry(name = "retryUserService", fallbackMethod = "buildFallbackUser")
     public UserResponseDto insertUser(UserRequestDto requestDto) {
         User user = new User();
 
@@ -47,6 +50,7 @@ public class UserService {
     @Transactional
     @CircuitBreaker(name = "userService", fallbackMethod = "buildFallbackUser")
     @Bulkhead(name="bulkheadUserService", fallbackMethod = "buildFallbackUser")
+    @Retry(name = "retryUserService", fallbackMethod = "buildFallbackUser")
     public UserResponseDto updateUser(UserRequestDto requestDto) {
         User updateUser = userRepository.findById(requestDto.getUserSeq()).get();
 
@@ -62,6 +66,7 @@ public class UserService {
     @Transactional
     @CircuitBreaker(name = "userService")
     @Bulkhead(name="bulkheadUserService")
+    @Retry(name = "retryUserService")
     public void deleteUser(UserSeqRequestDto requestDto) {
         userRepository.deleteById(requestDto.getUserSeq());
     }

@@ -10,6 +10,7 @@ import com.replyservice.replyservice.repository.ReplyRepository;
 import com.replyservice.replyservice.service.client.UserFeignClient;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class ReplyService {
 
     @CircuitBreaker(name = "replyService", fallbackMethod = "buildFallbackReplyList")
     @Bulkhead(name="bulkheadReplyService", fallbackMethod = "buildFallbackReplyList")
+    @Retry(name = "retryReplyService", fallbackMethod = "buildFallbackReplyList")
     public List<ReplyResponseDto> selectReplyList(Integer boardSeq) {
         List<Reply> replyList = replyRepository.findByBoardSeq(boardSeq);
         List<Integer> userSeqList = replyList.stream().map(Reply::getUserSeq).toList();
@@ -52,6 +54,7 @@ public class ReplyService {
     @Transactional
     @CircuitBreaker(name = "replyService", fallbackMethod = "buildFallbackReply")
     @Bulkhead(name="bulkheadReplyService", fallbackMethod = "buildFallbackReply")
+    @Retry(name = "retryReplyService", fallbackMethod = "buildFallbackReply")
     public ReplyResponseDto insertReplyList(ReplyRequestDto requestDto) {
         Reply reply = new Reply();
         reply.setReplyContent(requestDto.getReplyContent());
@@ -66,6 +69,7 @@ public class ReplyService {
     @Transactional
     @CircuitBreaker(name = "replyService", fallbackMethod = "buildFallbackReply")
     @Bulkhead(name="bulkheadReplyService", fallbackMethod = "buildFallbackReply")
+    @Retry(name = "retryReplyService", fallbackMethod = "buildFallbackReply")
     public ReplyResponseDto updateReply(ReplyRequestDto requestDto) {
         Reply updateReply = replyRepository.findById(requestDto.getReplySeq()).get();
         updateReply.setReplyContent(requestDto.getReplyContent());
@@ -78,6 +82,7 @@ public class ReplyService {
     @Transactional
     @CircuitBreaker(name = "replyService")
     @Bulkhead(name="bulkheadReplyService")
+    @Retry(name = "retryReplyService")
     public void deleteReply(ReplySeqRequestDto requestDto) {
         replyRepository.deleteById(requestDto.getReplySeq());
     }
