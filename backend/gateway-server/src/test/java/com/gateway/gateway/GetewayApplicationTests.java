@@ -1,4 +1,4 @@
-package com.gateway.geteway;
+package com.gateway.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
