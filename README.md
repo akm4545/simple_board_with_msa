@@ -81,4 +81,5 @@
    - spring-cloud-starter-gateway
    - eureka
    - spring-cloud-starter-loadbalancer
+36. 게이트웨이 서버의 yml 작성 후 컨피그 서버에 게이트웨이 서버 유레카 구성 정보 yml를 추가한다
    
