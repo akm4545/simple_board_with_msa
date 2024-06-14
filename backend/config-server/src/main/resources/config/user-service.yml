@@ -91,3 +91,9 @@ resilience4j:
 #        재시도 대상이 되는 예외 목록
         retry-exceptions:
           - java.util.concurrent.TimeoutException
+#엑추에이터 엔드포인트 노출
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

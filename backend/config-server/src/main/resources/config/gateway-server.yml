@@ -10,3 +10,19 @@ eureka:
     serviceUrl:
       defaultZone:
         http://localhost:8070/eureka/
+spring:
+  cloud:
+    gateway:
+#      서비스 디스커버리에 등록된 서비스를 기반으로 게이트웨이가 경로를 생성하도록 설정
+      discovery.locator:
+        enabled: true
+        lowerCaseServiceId: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,refresh
+  endpoint:
+    gateway:
+      enabled: true

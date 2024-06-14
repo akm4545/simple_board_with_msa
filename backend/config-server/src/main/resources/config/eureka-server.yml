@@ -17,3 +17,9 @@ eureka:
     server:
 #      서버가 요청을 받기 전 초기 대기 시간 설정
       waitTimeInMsWhenSyncEmpty:
+#엑추에이터 엔드포인트 노출
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
