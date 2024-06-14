@@ -82,4 +82,4 @@
    - eureka
    - spring-cloud-starter-loadbalancer
 36. 게이트웨이 서버의 yml 작성 후 컨피그 서버에 게이트웨이 서버 유레카 구성 정보 yml를 추가한다
-37. 게이트웨이 서버의 Application 클래스에 @EnableEurekaClient 어노테이션을 선언한다
+37. 게이트웨이 서버의 Application 클래스에 @EnableEurekaClient 어노테이션을 선언한다 (스프링 클라우드 2022.0 이상 버전에서는 선언할 필요가 없다)
