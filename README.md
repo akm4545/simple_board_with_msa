@@ -106,5 +106,5 @@
    - UserContextFilter = 유입되는 HTTP 요청을 가로채고 HTTP 요청에서 사용자 컨텍스트 클래스로 상관관계 ID(외 몇가지 정보)를 매핑하는 필터
    - UserContext = 각 서비스 크라이언트 요청의 HTTP 헤더 값을 보관
    - UserContextInterceptor = HTTP 기반 서비스 발신 요청에 상관관계 ID를 주입
-44. 서비스들의 Application 클래스에 @LoadBalancer 어노테이션을 붙인 RestTemplate 빈을 만들어 인터셉터를 등록한다
+44. 서비스들의 Application 클래스에 @LoadBalanced 어노테이션을 붙인 RestTemplate 빈을 만들어 인터셉터를 등록한다
 
