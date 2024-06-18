@@ -100,4 +100,10 @@
    - 있다며 아무일도 하지 않는다 (상관관계 ID가 있다는 것은 이 특정 서비스 호출이 사용자 요청을 수행하는 서비스 호출 체인의 한 부분임을 의미한다)
    - 모든 필터에서 사용할 기능을 캡슐화한 FilterUtils 클래스를 만든다 (해당 기능의 구현은 자유롭게)
    - TrackingFilter 클래스를 생성하고 필터 내용을 작성한다
+43. 각 서비스에 UserContextFilter, UserContext, UserContext Interceptor 세 가지 클래스를 생성한다
+   - 이 클래스는 유입되는 HTTP 요청의 상관관계 ID를 읽기 위해 협업하고 애플리케이션의 비즈니스 로직에서 쉽게 액세스하고 사용할 수 있는 클래스에 ID를 매핑해서
+   - 모든 하위 서비스 호출에 전파
+   - UserContextFilter = 유입되는 HTTP 요청을 가로채고 HTTP 요청에서 사용자 컨텍스트 클래스로 상관관계 ID(외 몇가지 정보)를 매핑하는 필터
+   - UserContext = 각 서비스 크라이언트 요청의 HTTP 헤더 값을 보관
+   - UserContextInterceptor = HTTP 기반 서비스 발신 요청에 상관관계 ID를 주입
 
