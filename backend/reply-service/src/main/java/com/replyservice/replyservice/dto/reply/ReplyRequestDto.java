@@ -1,12 +1,11 @@
 package com.replyservice.replyservice.dto.reply;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReplyRequestDto {
     private Integer replySeq;
 

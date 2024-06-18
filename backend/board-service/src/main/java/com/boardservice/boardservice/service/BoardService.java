@@ -113,11 +113,15 @@ public class BoardService {
         boardRepository.deleteById(requestDto.getBoardSeq());
     }
 
-    private ResponseEntity<BoardResponseDto> buildFallbackBoard() {
-        return ResponseEntity.ok(new BoardResponseDto());
+    private BoardResponseDto buildFallbackBoard(BoardSeqRequestDto requestDto, Throwable t) {
+        return new BoardResponseDto();
     }
 
-    private ResponseEntity<List<BoardResponseDto>> buildFallbackBoardList() {
-        return ResponseEntity.ok(List.of(new BoardResponseDto()));
+    private BoardResponseDto buildFallbackBoard(BoardRequestDto requestDto, Throwable t) {
+        return new BoardResponseDto();
+    }
+
+    private List<BoardResponseDto> buildFallbackBoardList(Throwable t) {
+        return List.of(new BoardResponseDto());
     }
 }

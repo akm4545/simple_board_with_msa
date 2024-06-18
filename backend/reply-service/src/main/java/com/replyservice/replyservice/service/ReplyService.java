@@ -87,11 +87,11 @@ public class ReplyService {
         replyRepository.deleteById(requestDto.getReplySeq());
     }
 
-    private ResponseEntity<ReplyRequestDto> buildFallbackReply() {
-        return ResponseEntity.ok(new ReplyRequestDto());
+    private ReplyRequestDto buildFallbackReply(ReplyRequestDto requestDto, Throwable t) {
+        return new ReplyRequestDto();
     }
 
-    private ResponseEntity<List<ReplyResponseDto>> buildFallbackReplyList() {
-        return ResponseEntity.ok(List.of(new ReplyResponseDto()));
+    private List<ReplyResponseDto> buildFallbackReplyList(Integer boardSeq, Throwable t) {
+        return List.of(new ReplyResponseDto());
     }
 }

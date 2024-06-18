@@ -78,11 +78,11 @@ public class UserService {
         return responseDtoList;
     }
 
-    private ResponseEntity<UserResponseDto> buildFallbackUser() {
-        return ResponseEntity.ok(new UserResponseDto());
+    private UserResponseDto buildFallbackUser(UserSeqRequestDto requestDto, Throwable t) {
+        return new UserResponseDto();
     }
 
-    private ResponseEntity<List<UserResponseDto>> buildFallbackUserList() {
-        return ResponseEntity.ok(List.of(new UserResponseDto()));
+    private UserResponseDto buildFallbackUser(UserRequestDto requestDto, Throwable t) {
+        return new UserResponseDto();
     }
 }
