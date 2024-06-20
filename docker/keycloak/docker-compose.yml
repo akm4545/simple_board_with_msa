@@ -1,0 +1,12 @@
+version: '2.1'
+services:
+  keycloak:
+    image: alemairebe/keycloak:14.0.0
+    restart: always
+    environment:
+      KEYCLOAK_VERSION: 6.0.1
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - "8080:8080"  
+    
