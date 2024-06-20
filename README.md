@@ -130,3 +130,10 @@
 50. 클라이언트 역할 설정을 위해 Roles 메뉴를 선택한다
    - Add Role 버튼을 클릭한다
    - 설정할 Role 이름을 넣고 저장한다.
+51. 사용자 구성
+   - Users 항목 클릭
+   - 양식을 입력 후 저장
+   - Credentials 탭을 클릭 후 사용자 페스워드 입력
+   - Temporary 옵션을 비활성화한 후 Set Password 버튼을 누른다
+   - Role Mappings 탭 클릭
+   - Role을 지정하자
