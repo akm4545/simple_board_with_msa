@@ -121,7 +121,12 @@
    - 클라이언트 = 사용자 인증을 요청할 수 있는 개체
    - Clients 메뉴를 선택한다
    - 오른쪽 상단에 Create 버튼을 누른다
-   - Client ID = 클라이언트 명, Client Protocol = poenid-connect를 선택하고 save 버튼을 눌러 저장한다\
+   - Client ID = 클라이언트 명, Client Protocol = poenid-connect를 선택하고 save 버튼을 눌러 저장한다
+   - 액세스 타입 = Confidential
+   - 서비스 계정 활성화 = On
+   - 권한 부여 활성화 = On
+   - 유효한 리다이렉트 URIs = http://localhost:8081/*
+   - 웹 오리진: *
 50. 클라이언트 역할 설정을 위해 Roles 메뉴를 선택한다
    - Add Role 버튼을 클릭한다
    - 설정할 Role 이름을 넣고 저장한다.
