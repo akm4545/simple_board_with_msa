@@ -137,3 +137,12 @@
    - Temporary 옵션을 비활성화한 후 Set Password 버튼을 누른다
    - Role Mappings 탭 클릭
    - Role을 지정하자
+52. 인증 서비스 시작
+   - 왼쪽 메뉴에서 Realm Settings 항목 선택 -> OpenID Endpoint Configuration 링크를 클릭하여 가용 엔드포인트 목록 확인
+   - Post맨 요청 테스트
+   - 요청 End Point = http://keycloak:8080/auth/realms/렐름 명/protocol/openid-connect/token
+   - Authorization = Basic Auth -> username, password 입력
+   - body = x-www-form-unlencoded
+   - grant_type = password
+   - username = 유저명
+   - password = 패스워드
