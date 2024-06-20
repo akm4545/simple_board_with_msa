@@ -141,7 +141,7 @@
    - 왼쪽 메뉴에서 Realm Settings 항목 선택 -> OpenID Endpoint Configuration 링크를 클릭하여 가용 엔드포인트 목록 확인
    - Post맨 요청 테스트
    - 요청 End Point = http://keycloak:8080/auth/realms/렐름 명/protocol/openid-connect/token
-   - Authorization = Basic Auth -> username, password 입력
+   - Authorization = Basic Auth -> username = 클라이언트 ID, password = 시크릿키(client -> credentials에 있다)입력
    - body = x-www-form-unlencoded
    - grant_type = password
    - username = 유저명
