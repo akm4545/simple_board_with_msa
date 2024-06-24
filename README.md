@@ -146,3 +146,6 @@
    - grant_type = password
    - username = 유저명
    - password = 패스워드
+53. 서비스들에 키클록 스프링 의존성과 스프링 시큐리티 스타터 의존성을 추가한다
+   - keycloak-spring-boot-starter
+   - spring-boot-starter-security
