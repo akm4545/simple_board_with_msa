@@ -18,6 +18,19 @@ spring:
     url: "{cipher}6d5837042b97230185a3dfabc03befb56f620eea9bb038dacbe86fc3aaab9841d692110c2f319001d4a1534c85a967b4e35afed1f91f0653781bf1c530dc946d5595fcc28d4f59016e05e1bf5c25ee8399ec1df05f6f2087f5e47f409d60dc9d9272e5886c337b7c92428964109059a3"
     username: "{cipher}9231db624ce6b7cc0d476f1a345a59a1b268177495f2749fb3ac1b0267a46ae4"
     password: "{cipher}9d9a02723faa05bef29ecd10b1635ff28dd0b948f2fe85497b98ee2ce7bbf42a"
+    #   spring security 설정
+    security:
+      oauth2:
+        client:
+          provider:
+            keycloak:
+              issuer-uri: http://localhost:8080/realms/simple-board-realm
+          registration:
+            keycloak:
+              client-id: simple-board
+              client-secret: cdf888b2-1360-4156-87f2-92ae8fe31429
+              authorization-grant-type: authorization_code
+              redirect-uri: '{baseUrl}/login/oauth2/code/keycloak'
 eureka:
   instance:
     #    서비스 이름 대신 서비스 IP 주소 등록
