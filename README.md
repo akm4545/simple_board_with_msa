@@ -150,4 +150,5 @@
    - keycloak-spring-boot-starter
    - spring-boot-starter-security
 54. 컨피그 서버에 키클록 관련 설정을 입력한다
-55. KeycloakWebSecurityConfigurerAdapter 클래스를 확장하여 SecurityConfig를 만든다
+55. KeycloakWebSecurityConfigurerAdapter 클래스를 확장하여 SecurityConfig를 만든다 (spring 3 버전으로 바뀌면서 작동 x)
+   - keycloak 관련 파일은 주석으로 keycloak 표기
