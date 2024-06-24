@@ -113,4 +113,39 @@
    - 키클록의 주요 목표는 서비스와 애플리케이션의 코딩을 전혀 또는 거의 하지 않고 서비스와 애플리케이션을 쉽게 보호하는 것
 47. 키클록 docker-compose.yml 작성
 48. 작성한 compose 파일로 컨테이너 구동 후 http://keycloak:8080/auth로 들어간다
-
+   - 관리자 콘솔 메뉴를 클릭한다
+   - 아이디 패스워드 입력 후 접속한다
+   - 드롭다운 메뉴에서 Add realm 항목을 클릭해서 realm(키클록이 사용자, 자격증명, 역할, 그룹을 관리하는 객체를 참조하는 개념)을 추가한다
+   - realm 명을 입혁하고 create 버튼을 누른다
+49. 클라이언트 애플리케이션을 등록한다
+   - 클라이언트 = 사용자 인증을 요청할 수 있는 개체
+   - Clients 메뉴를 선택한다
+   - 오른쪽 상단에 Create 버튼을 누른다
+   - Client ID = 클라이언트 명, Client Protocol = poenid-connect를 선택하고 save 버튼을 눌러 저장한다
+   - 액세스 타입(Access Type) = Confidential
+   - 서비스 계정 활성화(Service Accounts Enabled) = On
+   - 권한 부여 활성화(Authorization Enabled) = On
+   - 유효한 리다이렉트 URIs(Valid Redirect URIs) = http://localhost:8081/*
+   - 웹 오리진(Web Origin) : *
+50. 클라이언트 역할 설정을 위해 Roles 메뉴를 선택한다
+   - Add Role 버튼을 클릭한다
+   - 설정할 Role 이름을 넣고 저장한다.
+51. 사용자 구성
+   - Users 항목 클릭
+   - 양식을 입력 후 저장
+   - Credentials 탭을 클릭 후 사용자 페스워드 입력
+   - Temporary 옵션을 비활성화한 후 Set Password 버튼을 누른다
+   - Role Mappings 탭 클릭
+   - Role을 지정하자
+52. 인증 서비스 시작
+   - 왼쪽 메뉴에서 Realm Settings 항목 선택 -> OpenID Endpoint Configuration 링크를 클릭하여 가용 엔드포인트 목록 확인
+   - Post맨 요청 테스트
+   - 요청 End Point = http://keycloak:8080/auth/realms/렐름 명/protocol/openid-connect/token
+   - Authorization = Basic Auth -> username = 클라이언트 ID, password = 시크릿키(client -> credentials에 있다)입력
+   - body = x-www-form-unlencoded
+   - grant_type = password
+   - username = 유저명
+   - password = 패스워드
+53. 서비스들에 키클록 스프링 의존성과 스프링 시큐리티 스타터 의존성을 추가한다
+   - keycloak-spring-boot-starter
+   - spring-boot-starter-security
