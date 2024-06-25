@@ -23,7 +23,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:8080/realms/simple-board-realm/protocol/openid-connect/certs
+          jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
 eureka:
   instance:
 #    서비스 이름 대신 서비스 IP 주소 등록
@@ -111,7 +111,7 @@ keycloak:
   realm: simple-board-realm
   bearer-only: true
 #  키클록 서버 URL 인증 엔드포인트
-  auth-server-url: http://localhost:8080/
+  auth-server-url: http://localhost:8080/auth/
   ssl-required: external
 #  클라이언트 ID
   resource: simple-board

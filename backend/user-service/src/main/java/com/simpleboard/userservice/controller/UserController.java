@@ -132,10 +132,6 @@ public class UserController {
 
     @PostMapping("/refreshToken")
     public ResponseEntity<UserLoginResponseDto> refreshToken(@RequestBody RefreshTokenRequestDto requestDto) {
-        Map<String, Object> tokenRes = authService.refreshToken(requestDto);
-
-        return ResponseEntity.ok(UserLoginResponseDto.builder()
-                .token(tokenRes.get("token").toString())
-                .build());
+        return ResponseEntity.ok(authService.refreshToken(requestDto));
     }
 }

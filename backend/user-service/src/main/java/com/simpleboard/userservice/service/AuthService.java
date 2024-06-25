@@ -2,6 +2,7 @@ package com.simpleboard.userservice.service;
 
 import com.simpleboard.userservice.dto.RefreshTokenRequestDto;
 import com.simpleboard.userservice.dto.UserLoginRequestDto;
+import com.simpleboard.userservice.dto.UserLoginResponseDto;
 import com.simpleboard.userservice.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.CreatedResponseUtil;
@@ -56,8 +57,8 @@ public class AuthService {
         UsersResource usersResource = realmResource.users();
 
         Response response = usersResource.create(user);
-        if(response.getStatus() == 201) {
 
+        if(response.getStatus() == 201) {
             String userId = CreatedResponseUtil.getCreatedId(response);
 
             // create password credential
@@ -73,9 +74,12 @@ public class AuthService {
 
             // role 세팅
             ClientRepresentation clientRep = realmResource.clients().findByClientId(clientId).get(0);
-            RoleRepresentation clientRoleRep = realmResource.clients().get(clientRep.getId()).roles().get("USER").toRepresentation();
+            RoleRepresentation clientRoleRep = realmResource.clients()
+                    .get(clientRep.getId())
+                    .roles()
+                    .get("USER")
+                    .toRepresentation();
             userResource.roles().clientLevel(clientRep.getId()).add(Arrays.asList(clientRoleRep));
-
         }
     }
 
@@ -93,7 +97,7 @@ public class AuthService {
         return response;
     }
 
-    public Map<String, Object> refreshToken(RefreshTokenRequestDto requestDto) {
+    public UserLoginResponseDto refreshToken(RefreshTokenRequestDto requestDto) {
         String url = authServerUrl + "realms/" + realm + "/protocol/openid-connect/token";
         String url2 = authServerUrl + "realms/" + realm + "/protocol/openid-connect/userinfo";
 
@@ -109,16 +113,20 @@ public class AuthService {
         HttpEntity<?> entity = new HttpEntity<>(map, headers);
 
         Map<String, Object> data = new HashMap<String, Object>();
-
         ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
-        data.put("token", response.getBody());
 
-        if (response.getStatusCodeValue() == 200 ) {
-            headers.add( "Authorization","Bearer " + response.getBody().get("access_token"));
+        data.put("token", response.getBody().get(""));
 
-            ResponseEntity<Map> response2 = restTemplate.exchange( url2, HttpMethod.POST, entity, Map.class );
-            data.put("username", response2.getBody().get("preferred_username"));
-        }
-        return data;
+        //유저 정보 얻어오는 부분
+//        if (response.getStatusCodeValue() == 200 ) {
+//            headers.add( "Authorization","Bearer " + response.getBody().get("access_token"));
+//
+//            ResponseEntity<Map> response2 = restTemplate.exchange( url2, HttpMethod.POST, entity, Map.class );
+//            data.put("username", response2.getBody().get("preferred_username"));
+//        }
+        return UserLoginResponseDto.builder()
+                .token(response.getBody().get("access_token").toString())
+                .refreshToken(response.getBody().get("refresh_token").toString())
+                .build();
     }
 }
