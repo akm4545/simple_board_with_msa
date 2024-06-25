@@ -1,16 +1,16 @@
 package com.simpleboard.userservice.controller;
 
-import com.simpleboard.userservice.dto.UserListRequestDto;
-import com.simpleboard.userservice.dto.UserRequestDto;
-import com.simpleboard.userservice.dto.UserSeqRequestDto;
-import com.simpleboard.userservice.dto.UserResponseDto;
+import com.simpleboard.userservice.dto.*;
+import com.simpleboard.userservice.service.AuthService;
 import com.simpleboard.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 //HATEOAS 사용을 위해 import
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -19,6 +19,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 public class UserController {
 
     private final UserService userService;
+
+    private final AuthService authService;
 
     @GetMapping("/user/{userSeq}")
     public ResponseEntity<UserResponseDto> selectUser(@PathVariable Integer userSeq) {
@@ -54,6 +56,7 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<UserResponseDto> insertUser(@RequestBody UserRequestDto requestDto) {
         UserResponseDto responseDto = userService.insertUser(requestDto);
+        authService.insertUser(requestDto);
         responseDto.add(linkTo(methodOn(UserController.class)
                         .selectUser(requestDto.getUserSeq()))
                         .withRel("selectUser"),
@@ -115,5 +118,24 @@ public class UserController {
                         .withSelfRel());
 
         return ResponseEntity.ok(responseDto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserLoginResponseDto> loginUser(@RequestBody UserLoginRequestDto requestDto) {
+        AccessTokenResponse tokenResponse = authService.setAuth(requestDto); // Token 발급
+
+        return ResponseEntity.ok(UserLoginResponseDto.builder()
+                .token(tokenResponse.getToken())
+                .refreshToken(tokenResponse.getRefreshToken())
+                .build());
+    }
+
+    @PostMapping("/refreshToken")
+    public ResponseEntity<UserLoginResponseDto> refreshToken(@RequestBody RefreshTokenRequestDto requestDto) {
+        Map<String, Object> tokenRes = authService.refreshToken(requestDto);
+
+        return ResponseEntity.ok(UserLoginResponseDto.builder()
+                .token(tokenRes.get("token").toString())
+                .build());
     }
 }

@@ -17,6 +17,19 @@ spring:
       discovery.locator:
         enabled: true
         lowerCaseServiceId: true
+#  키클록 관련
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/simple-board-realm
+        registration:
+          keycloak:
+            client-id: simple-board
+            client-secret: cdf888b2-1360-4156-87f2-92ae8fe31429
+            authorization-grant-type: authorization_code
+            redirect-uri: '{baseUrl}/login/oauth2/code/keycloak'
 
 management:
   endpoints:
@@ -26,3 +39,11 @@ management:
   endpoint:
     gateway:
       enabled: true
+
+keycloak:
+  realm: simple-board-realm
+  # realm: realm 이름
+  resource: simple-board
+  # resource: client 이름
+  auth-server-url: http://localhost:8080/
+  # auth-server-url: http://설정한 키클록url:port/

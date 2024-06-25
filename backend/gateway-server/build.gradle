@@ -29,6 +29,10 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    
+    // 키클록 관련
+    implementation group: 'org.keycloak.bom', name: 'keycloak-adapter-bom', version: '3.0.0.CR1', ext: 'pom'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 dependencyManagement {
