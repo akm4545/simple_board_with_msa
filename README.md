@@ -152,5 +152,6 @@
 54. 컨피그 서버에 키클록 관련 설정을 입력한다
 55. KeycloakWebSecurityConfigurerAdapter 클래스를 확장하여 SecurityConfig를 만든다 (spring 3 버전으로 바뀌면서 작동 x)
    - keycloak 관련 파일은 주석으로 keycloak 표기
-   - client에 user 관련 룰 추가 필요
+   - client에 user, client 관련 룰 추가 필요
    - 실 서버 사용시 db 연동 필요
+   - 키클록 요청 URL에 auth가 들어간 버전이랑 빠진 버전이 존재
