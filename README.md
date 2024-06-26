@@ -155,3 +155,6 @@
    - client에 user, client 관련 룰 추가 필요
    - 실 서버 사용시 db 연동 필요
    - 키클록 요청 URL에 auth가 들어간 버전이랑 빠진 버전이 존재
+56. 각 서비스를 보호하고 토큰의 검증을 위한 키클록 설정을 컨피그 서버의 yml에 작성한다
+57. 각 서비스에 스프링 시큐리티와 키클록의 의존성을 추가한다.
+58. 각 서비스에 KeycloakWebSecurityConfigurerAdapter 클래스를 확장하여 SecurityConfig를 만든다 (spring 3 버전으로 바뀌면서 작동 x)
