@@ -158,3 +158,4 @@
 56. 각 서비스를 보호하고 토큰의 검증을 위한 키클록 설정을 컨피그 서버의 yml에 작성한다
 57. 각 서비스에 스프링 시큐리티와 키클록의 의존성을 추가한다.
 58. 각 서비스에 KeycloakWebSecurityConfigurerAdapter 클래스를 확장하여 SecurityConfig를 만든다 (spring 3 버전으로 바뀌면서 작동 x)
+   - 접근 제한은 해당 컨트롤러에 @RolesAllowed({"USER"}) 같은 형식으로도 가능하다
