@@ -46,6 +46,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '3.1.0.Final'
+    // keycloack 관련 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '3.1.0.Final'
+    implementation group: 'org.keycloak.bom', name: 'keycloak-adapter-bom', version: '3.0.0.CR1', ext: 'pom'
+//    인증 관련 keycloack
+    implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '17.0.0'
+    implementation group: 'org.keycloak', name: 'keycloak-authz-client', version: '17.0.0'
 }
 
 dependencyManagement {
