@@ -160,3 +160,6 @@
 58. 각 서비스에 KeycloakWebSecurityConfigurerAdapter 클래스를 확장하여 SecurityConfig를 만든다 (spring 3 버전으로 바뀌면서 작동 x)
    - 접근 제한은 해당 컨트롤러에 @RolesAllowed({"USER"}) 같은 형식으로도 가능하다
 59. 상관관계 전파를 위해 작성한 클래스를 이용하여 토큰을 전달한다
+60. 메시징을 사용한 서비스간 상태 변화 전달을 위해 카프카 의존성 주입
+   - spring-cloud-stream
+   - spring-cloud-starter-stream-kafak
