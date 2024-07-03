@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class BoardEventProducer {
 
     @Value("test")
-    private String userPublish = "test";
+    private String boardPublish = "test";
 
     //    메세지 발행 공통 (채널명, 메세지)
     private final StreamBridge streamBridge;
@@ -30,7 +30,7 @@ public class BoardEventProducer {
         logger.debug("Sending Kafka message {} for Organization Id: {}", action, boardDto.getBoardSeq());
 
         //    메세지 발행 공통 (채널명, 메세지)
-        streamBridge.send(userPublish, BoardChangeModel.builder()
+        streamBridge.send(boardPublish, BoardChangeModel.builder()
                         .boardTitle(boardDto.getBoardTitle())
                         .userSeq(boardDto.getUserSeq())
                         .boardContent(boardDto.getBoardContent())
