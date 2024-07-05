@@ -25,17 +25,32 @@ spring:
         jwt:
           jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
   #  카프카 세팅
-  kafka:
-    producer:
-      bootstrap-server: localhost:2181
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    consumer:
-      group-id: test
-      auto-offset-reset: earliest
-    template:
-      default-topic: test
-
+  cloud:
+    #    function:
+    #      definition: simpleboardTopic;
+    stream:
+      kafka:
+        #        bindings:
+        #          producer할 topic 명 - out - 0
+        #          simpleboardTopic:
+        #            producer:
+        #              configuration:
+        #                key:
+        #                  serializer: org.apache.kafka.common.serialization.StringSerializer
+        #          kafkaConsumer-in-0:
+        #            consumer:
+        #              configuration:
+        #                key:
+        #                  deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        binder:
+          #          브로커 주소
+          brokers: localhost:9092
+#      bindings:
+#        simpleboardTopic:
+#          destination: simpleboardTopic # topic
+#          contentType: application/json
+#        kafkaConsumer-in-0:
+#          destination: test  # topic
 eureka:
   instance:
     #    서비스 이름 대신 서비스 IP 주소 등록

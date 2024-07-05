@@ -6,10 +6,12 @@ import com.boardservice.boardservice.dto.board.BoardSeqRequestDto;
 import com.boardservice.boardservice.dto.reply.ReplyResponseDto;
 import com.boardservice.boardservice.dto.user.UserListRequestDto;
 import com.boardservice.boardservice.dto.user.UserResponseDto;
+import com.boardservice.boardservice.event.producer.BoardEventProducer;
 import com.boardservice.boardservice.model.Board;
 import com.boardservice.boardservice.repository.BoardRepository;
 import com.boardservice.boardservice.service.client.ReplyFeignClient;
 import com.boardservice.boardservice.service.client.UserFeignClient;
+import com.boardservice.boardservice.utils.ActionEnum;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -35,6 +37,8 @@ public class BoardService {
 
     private final ReplyFeignClient replyFeignClient;
 
+    private final BoardEventProducer boardEventProducer;
+
     @CircuitBreaker(name = "boardService", fallbackMethod = "buildFallbackBoard")
     @Bulkhead(name="bulkheadBoardService", fallbackMethod = "buildFallbackBoard")
     @Retry(name = "retryBoardService", fallbackMethod = "buildFallbackBoard")
@@ -47,6 +51,8 @@ public class BoardService {
         List<ReplyResponseDto> replyResponseDtoList = replyResponse.getBody();
 
         BoardResponseDto responseDto = new BoardResponseDto(board, userResponseDto, replyResponseDtoList);
+
+        boardEventProducer.send(ActionEnum.GET, responseDto);
 
         return responseDto;
     }
@@ -89,6 +95,8 @@ public class BoardService {
 
         BoardResponseDto responseDto = new BoardResponseDto(boardRepository.save(board));
 
+        boardEventProducer.send(ActionEnum.CREATED, responseDto);
+
         return responseDto;
     }
 
@@ -104,6 +112,8 @@ public class BoardService {
 
         BoardResponseDto responseDto = new BoardResponseDto(updateBoard);
 
+        boardEventProducer.send(ActionEnum.UPDATED, responseDto);
+
         return responseDto;
     }
 
@@ -113,6 +123,10 @@ public class BoardService {
     @Retry(name = "retryBoardService")
     public void deleteBoard(BoardSeqRequestDto requestDto) {
         boardRepository.deleteById(requestDto.getBoardSeq());
+
+        boardEventProducer.send(ActionEnum.DELETED, BoardResponseDto.builder()
+                        .boardSeq(requestDto.getBoardSeq())
+                .build());
     }
 
     private BoardResponseDto buildFallbackBoard(BoardSeqRequestDto requestDto, Throwable t) {

@@ -5,9 +5,11 @@ import com.replyservice.replyservice.dto.reply.ReplyResponseDto;
 import com.replyservice.replyservice.dto.reply.ReplySeqRequestDto;
 import com.replyservice.replyservice.dto.user.UserListRequestDto;
 import com.replyservice.replyservice.dto.user.UserResponseDto;
+import com.replyservice.replyservice.event.producer.ReplyEventProducer;
 import com.replyservice.replyservice.model.Reply;
 import com.replyservice.replyservice.repository.ReplyRepository;
 import com.replyservice.replyservice.service.client.UserFeignClient;
+import com.replyservice.replyservice.utils.ActionEnum;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -28,6 +30,8 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
 
     private final UserFeignClient userFeignClient;
+
+    private final ReplyEventProducer replyEventProducer;
 
     @CircuitBreaker(name = "replyService", fallbackMethod = "buildFallbackReplyList")
     @Bulkhead(name="bulkheadReplyService", fallbackMethod = "buildFallbackReplyList")
@@ -63,6 +67,8 @@ public class ReplyService {
 
         ReplyResponseDto responseDto = new ReplyResponseDto(replyRepository.save(reply));
 
+        replyEventProducer.send(ActionEnum.CREATED, responseDto);
+
         return responseDto;
     }
 
@@ -76,6 +82,8 @@ public class ReplyService {
 
         ReplyResponseDto responseDto = new ReplyResponseDto(updateReply);
 
+        replyEventProducer.send(ActionEnum.UPDATED, responseDto);
+
         return responseDto;
     }
 
@@ -85,6 +93,10 @@ public class ReplyService {
     @Retry(name = "retryReplyService")
     public void deleteReply(ReplySeqRequestDto requestDto) {
         replyRepository.deleteById(requestDto.getReplySeq());
+
+        replyEventProducer.send(ActionEnum.DELETED, ReplyResponseDto.builder()
+                        .replySeq(requestDto.getReplySeq())
+                .build());
     }
 
     private ReplyRequestDto buildFallbackReply(ReplyRequestDto requestDto, Throwable t) {

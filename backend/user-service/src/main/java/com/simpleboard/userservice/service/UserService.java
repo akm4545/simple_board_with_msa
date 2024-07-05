@@ -4,8 +4,10 @@ import com.simpleboard.userservice.dto.UserListRequestDto;
 import com.simpleboard.userservice.dto.UserRequestDto;
 import com.simpleboard.userservice.dto.UserSeqRequestDto;
 import com.simpleboard.userservice.dto.UserResponseDto;
+import com.simpleboard.userservice.event.producer.UserEventProducer;
 import com.simpleboard.userservice.model.User;
 import com.simpleboard.userservice.repository.UserRepository;
+import com.simpleboard.userservice.utils.ActionEnum;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -22,13 +24,19 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    private final UserEventProducer userEventProducer;
+
     @CircuitBreaker(name = "userService", fallbackMethod = "buildFallbackUser")
     @Bulkhead(name="bulkheadUserService", fallbackMethod = "buildFallbackUser")
     @Retry(name = "retryUserService", fallbackMethod = "buildFallbackUser")
     public UserResponseDto selectUser(UserSeqRequestDto requestDto) {
         User user = userRepository.findById(requestDto.getUserSeq()).get();
+        UserResponseDto userResponseDto = new UserResponseDto(user);
 
-        return new UserResponseDto(user);
+        userEventProducer.send(ActionEnum.GET, userResponseDto);
+
+        return userResponseDto;
     }
 
     @Transactional
@@ -43,6 +51,8 @@ public class UserService {
         user.setUserPassword(requestDto.getUserPassword());
 
         UserResponseDto responseDto = new UserResponseDto(userRepository.save(user));
+
+        userEventProducer.send(ActionEnum.CREATED, responseDto);
 
         return responseDto;
     }
@@ -60,6 +70,8 @@ public class UserService {
 
         UserResponseDto responseDto = new UserResponseDto(updateUser);
 
+        userEventProducer.send(ActionEnum.UPDATED, responseDto);
+
         return responseDto;
     }
 
@@ -68,7 +80,12 @@ public class UserService {
     @Bulkhead(name="bulkheadUserService")
     @Retry(name = "retryUserService")
     public void deleteUser(UserSeqRequestDto requestDto) {
+
         userRepository.deleteById(requestDto.getUserSeq());
+
+        userEventProducer.send(ActionEnum.DELETED, UserResponseDto.builder()
+                        .userSeq(requestDto.getUserSeq())
+                .build());
     }
 
     public List<UserResponseDto> selectUserList(UserListRequestDto requestDto) {
