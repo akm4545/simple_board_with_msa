@@ -26,8 +26,8 @@ spring:
           jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
   #  카프카 세팅
   cloud:
-    #    function:
-    #      definition: simpleboardTopic;
+    function:
+      definition: boardConsumer;
     stream:
       kafka:
         #        bindings:
@@ -49,8 +49,9 @@ spring:
 #        simpleboardTopic:
 #          destination: simpleboardTopic # topic
 #          contentType: application/json
-#        kafkaConsumer-in-0:
-#          destination: test  # topic
+        boardConsumer:
+          destination: simpleBoard.board  # topic
+          contentType: application/json
 eureka:
   instance:
     #    서비스 이름 대신 서비스 IP 주소 등록

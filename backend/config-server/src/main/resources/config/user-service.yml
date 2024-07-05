@@ -26,8 +26,9 @@ spring:
           jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
 #  카프카 세팅
   cloud:
-#    function:
-#      definition: simpleboardTopic;
+    function:
+#      컨슈머가 @Bean으로 선언된 function의 이름을 기입
+      definition: useConsumer;
     stream:
       kafka:
 #        bindings:
@@ -45,12 +46,15 @@ spring:
         binder:
           #          브로커 주소
           brokers: localhost:9092
-#      bindings:
+      bindings:
 #        simpleboardTopic:
 #          destination: simpleboardTopic # topic
 #          contentType: application/json
-#        kafkaConsumer-in-0:
-#          destination: test  # topic
+#        채널 명 (스프링 내부에서 데이터 전달에 사용할 통로 명으로 이해)
+#        굳이 -in-0 안붙여도 될듯
+        useConsumer-in-0:
+          destination: simpleBoard.user  # topic
+          contentType: application/json
 eureka:
   instance:
 #    서비스 이름 대신 서비스 IP 주소 등록
