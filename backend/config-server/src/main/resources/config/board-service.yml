@@ -24,6 +24,17 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
+  #  카프카 세팅
+  kafka:
+    producer:
+      bootstrap-server: localhost:2181
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: test
+      auto-offset-reset: earliest
+    template:
+      default-topic: test
 
 eureka:
   instance:
