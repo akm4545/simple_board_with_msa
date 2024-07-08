@@ -26,7 +26,7 @@ public class ReplyMessageListener {
 
 
     @Bean
-    public Consumer<UserChangeModel> replyConsumer() {
+    public Consumer<UserChangeModel> userConsumer() {
         return userChangeModel -> {
             String userId = "user-" + userChangeModel.getUserSeq();
             Optional<RedisUser> redisUserOptional = redisUserRepository.findById(userId);
