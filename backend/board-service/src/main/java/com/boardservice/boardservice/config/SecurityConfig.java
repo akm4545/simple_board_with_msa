@@ -28,8 +28,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 인가(접근권한) 설정
         http.authorizeHttpRequests(authorize ->
-                authorize.requestMatchers("/board/**")
-                        .hasRole("USER")
+                authorize.requestMatchers("/**")
+                        .permitAll()
         );
 
         http.oauth2ResourceServer(oAuth2ResourceServerConfigurer ->

@@ -57,7 +57,8 @@ dependencies {
     //    메세징 및 카프카
     implementation 'org.springframework.cloud:spring-cloud-stream'
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
-    //implementation group: 'org.springframework.cloud', name: 'spring-cloud-stream-binder-kafka', version: '3.2.1'
+    //    레디스
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 dependencyManagement {
