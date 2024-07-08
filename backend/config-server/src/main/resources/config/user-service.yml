@@ -55,6 +55,10 @@ spring:
         useConsumer-in-0:
           destination: simpleBoard.user  # topic
           contentType: application/json
+#  레디스 설정
+  redis:
+    host: localhost
+    port: 6379
 eureka:
   instance:
 #    서비스 이름 대신 서비스 IP 주소 등록
