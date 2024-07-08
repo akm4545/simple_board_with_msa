@@ -13,6 +13,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.cloud.stream.function.StreamBridge;
 
+import java.time.LocalDateTime;
+
 @Component
 @RequiredArgsConstructor
 public class UserEventProducer {
@@ -37,11 +39,10 @@ public class UserEventProducer {
             streamBridge.send(userPublish, UserChangeModel.builder()
                     .userId(userDto.getUserId())
                     .userSeq(userDto.getUserSeq())
-                    .userPassword(userDto.getUserPassword())
-                    .userName(userDto.getUserName())
                     .action(action.toString())
                     .correlationId(UserContext.getCorrelationId())
                     .type(UserChangeModel.class.getTypeName())
+                    .publishDate(LocalDateTime.now())
                     .build());
         }catch (Exception e){
             e.printStackTrace();

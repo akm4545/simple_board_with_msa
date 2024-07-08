@@ -9,6 +9,7 @@ import com.replyservice.replyservice.event.producer.ReplyEventProducer;
 import com.replyservice.replyservice.model.Reply;
 import com.replyservice.replyservice.repository.ReplyRepository;
 import com.replyservice.replyservice.service.client.UserFeignClient;
+import com.replyservice.replyservice.service.client.UserFeignClientProxy;
 import com.replyservice.replyservice.utils.ActionEnum;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -29,7 +30,7 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    private final UserFeignClient userFeignClient;
+    private final UserFeignClientProxy userFeignClientProxy;
 
     private final ReplyEventProducer replyEventProducer;
 
@@ -43,7 +44,7 @@ public class ReplyService {
                 .userSeqList(userSeqList)
                 .build();
 
-        ResponseEntity<List<UserResponseDto>> userListResponse = userFeignClient.selectUserList(userRequestDto);
+        ResponseEntity<List<UserResponseDto>> userListResponse = userFeignClientProxy.selectUserList(userRequestDto);
         Map<Integer, UserResponseDto> userMap = userListResponse.getBody().stream().collect(Collectors.toMap(
                 UserResponseDto::getUserSeq,
                 value -> value

@@ -1,4 +1,4 @@
-package com.simpleboard.userservice.event.model;
+package com.replyservice.replyservice.event.model;
 
 import lombok.Builder;
 import lombok.Data;

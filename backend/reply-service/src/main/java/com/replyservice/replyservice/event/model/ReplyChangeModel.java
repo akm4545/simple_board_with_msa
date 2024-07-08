@@ -3,6 +3,9 @@ package com.replyservice.replyservice.event.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class ReplyChangeModel {
@@ -22,4 +25,6 @@ public class ReplyChangeModel {
 
     //이벤트를 발생시킨 서비스 호출의 상관관계 ID
     private String correlationId;
+
+    private LocalDateTime publishDate;
 }

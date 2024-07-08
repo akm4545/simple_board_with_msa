@@ -12,6 +12,8 @@ import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @RequiredArgsConstructor
 public class ReplyEventProducer {
@@ -39,6 +41,7 @@ public class ReplyEventProducer {
                 .action(action.toString())
                 .correlationId(UserContext.getCorrelationId())
                 .type(ReplyChangeModel.class.getTypeName())
+                .publishDate(LocalDateTime.now())
                 .build());
     }
 }
