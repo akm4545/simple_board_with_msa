@@ -19,11 +19,11 @@ spring:
     username: "{cipher}9231db624ce6b7cc0d476f1a345a59a1b268177495f2749fb3ac1b0267a46ae4"
     password: "{cipher}9d9a02723faa05bef29ecd10b1635ff28dd0b948f2fe85497b98ee2ce7bbf42a"
     #   spring security 설정
-    security:
-      oauth2:
-        resourceserver:
-          jwt:
-            jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
   #  카프카 세팅
   cloud:
     function:
@@ -49,7 +49,7 @@ spring:
 #        simpleboardTopic:
 #          destination: simpleboardTopic # topic
 #          contentType: application/json
-        userConsumer:
+        userConsumer-in-0:
           destination: simpleBoard.user  # topic
           contentType: application/json
   #  레디스 설정

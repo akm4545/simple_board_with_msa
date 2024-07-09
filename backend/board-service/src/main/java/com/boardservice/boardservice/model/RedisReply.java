@@ -1,8 +1,8 @@
 package com.boardservice.boardservice.model;
 
-import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.time.LocalDateTime;
@@ -20,6 +20,8 @@ public class RedisReply {
     private Integer boardSeq;
 
     private Integer userSeq;
+
+    private String userId;
 
     private String type;
 

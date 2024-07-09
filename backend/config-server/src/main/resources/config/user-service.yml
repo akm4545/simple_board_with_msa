@@ -52,6 +52,7 @@ spring:
 #          contentType: application/json
 #        채널 명 (스프링 내부에서 데이터 전달에 사용할 통로 명으로 이해)
 #        굳이 -in-0 안붙여도 될듯
+#        컨슈머 채널 명-in-0 해야 받아짐 이유 파악 필요
         useConsumer-in-0:
           destination: simpleBoard.user  # topic
           contentType: application/json

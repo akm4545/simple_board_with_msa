@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 @Configuration
 public class UserMessageListener {
 
-    Logger logger  = LoggerFactory.getLogger(UserMessageListener.class);
+    Logger logger = LoggerFactory.getLogger(UserMessageListener.class);
 
     @Bean
     public Consumer<UserResponseDto> useConsumer() {

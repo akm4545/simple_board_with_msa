@@ -10,7 +10,9 @@ import com.boardservice.boardservice.event.producer.BoardEventProducer;
 import com.boardservice.boardservice.model.Board;
 import com.boardservice.boardservice.repository.BoardRepository;
 import com.boardservice.boardservice.service.client.ReplyFeignClient;
+import com.boardservice.boardservice.service.client.ReplyFeignClientProxy;
 import com.boardservice.boardservice.service.client.UserFeignClient;
+import com.boardservice.boardservice.service.client.UserFeignClientProxy;
 import com.boardservice.boardservice.utils.ActionEnum;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -33,9 +35,9 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    private final UserFeignClient userFeignClient;
+    private final UserFeignClientProxy userFeignClientProxy;
 
-    private final ReplyFeignClient replyFeignClient;
+    private final ReplyFeignClientProxy replyFeignClientProxy;
 
     private final BoardEventProducer boardEventProducer;
 
@@ -44,8 +46,8 @@ public class BoardService {
     @Retry(name = "retryBoardService", fallbackMethod = "buildFallbackBoard")
     public BoardResponseDto selectBoard(BoardSeqRequestDto requestDto) {
         Board board = boardRepository.findById(requestDto.getBoardSeq()).get();
-        ResponseEntity<UserResponseDto> userResponse = userFeignClient.selectUser(board.getUserSeq());
-        ResponseEntity<List<ReplyResponseDto>> replyResponse = replyFeignClient.selectReplyList(board.getBoardSeq());
+        ResponseEntity<UserResponseDto> userResponse = userFeignClientProxy.selectUser(board.getUserSeq());
+        ResponseEntity<List<ReplyResponseDto>> replyResponse = replyFeignClientProxy.selectReplyList(board.getBoardSeq());
 
         UserResponseDto userResponseDto = userResponse.getBody();
         List<ReplyResponseDto> replyResponseDtoList = replyResponse.getBody();
@@ -67,7 +69,7 @@ public class BoardService {
                 .userSeqList(userSeqList)
                 .build();
 
-        ResponseEntity<List<UserResponseDto>> userListResponse = userFeignClient.selectUserList(userRequestDto);
+        ResponseEntity<List<UserResponseDto>> userListResponse = userFeignClientProxy.selectUserList(userRequestDto);
         Map<Integer, UserResponseDto> userMap = userListResponse.getBody().stream().collect(Collectors.toMap(
                 UserResponseDto::getUserSeq,
                 value -> value

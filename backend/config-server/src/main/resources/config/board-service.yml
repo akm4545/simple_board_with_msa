@@ -45,14 +45,14 @@ spring:
         binder:
           #          브로커 주소
           brokers: localhost:9092
-#      bindings:
+      bindings:
 #        simpleboardTopic:
 #          destination: simpleboardTopic # topic
 #          contentType: application/json
-        userConsumer:
+        userConsumer-in-0:
           destination: simpleBoard.user  # topic
           contentType: application/json
-        replyConsumer:
+        replyConsumer-in-0:
           destination: simpleBoard.reply  # topic
           contentType: application/json
   #  레디스 설정
