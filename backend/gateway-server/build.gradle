@@ -33,6 +33,8 @@ dependencies {
     // 키클록 관련
     implementation group: 'org.keycloak.bom', name: 'keycloak-adapter-bom', version: '3.0.0.CR1', ext: 'pom'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    //로그 스태시
+    implementation 'net.logstash.logback:logstash-logback-encoder:3.5'
 }
 
 dependencyManagement {
