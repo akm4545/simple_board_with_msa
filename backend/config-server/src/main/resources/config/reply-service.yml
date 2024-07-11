@@ -26,12 +26,9 @@ spring:
           jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
   #  카프카 세팅
   cloud:
-    #    슬루스가 Micrometer Tracing으로 바뀜으로 인해 검사하지 않도록 추가
-    #    나중에 Micrometer Tracing 학습 필요
-    compatibility-verifier:
-      enabled: false
-
-
+    openfeign:
+      micrometer:
+        enabled: true
     function:
       definition: userConsumer;
     stream:
@@ -141,6 +138,10 @@ management:
     web:
       exposure:
         include: refresh
+  # Tracing propagation type을 수정
+  tracing:
+    propagation:
+      type: b3
 
 #키클록 설정
 #암호화 해야 하지만 참고용으로 하지 않음
@@ -157,3 +158,7 @@ keycloak:
     secret: cdf888b2-1360-4156-87f2-92ae8fe31429
     use-resource-role-mappings: true
     bearer-only: true
+logging:
+  # Logging 패턴 설정
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

@@ -17,10 +17,6 @@ spring:
       discovery.locator:
         enabled: true
         lowerCaseServiceId: true
-#    슬루스가 Micrometer Tracing으로 바뀜으로 인해 검사하지 않도록 추가 
-#    나중에 Micrometer Tracing 학습 필요
-    compatibility-verifier:
-      enabled: false
 #  키클록 관련
   security:
     oauth2:
@@ -43,6 +39,10 @@ management:
   endpoint:
     gateway:
       enabled: true
+  # Tracing propagation type을 수정
+  tracing:
+    propagation:
+      type: b3
 
 keycloak:
   realm: simple-board-realm
@@ -51,3 +51,7 @@ keycloak:
   # resource: client 이름
   auth-server-url: http://localhost:8080/
   # auth-server-url: http://설정한 키클록url:port/
+logging:
+  # Logging 패턴 설정
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
