@@ -210,3 +210,5 @@
     - [user-service, 123adas213,dsae213dsad,flase]
 74. 로그백 구성을 위한 로그스태시 인코더 의존성을 서비스, 게이트웨이에 추가한다
     - logstash-logback-encoder
+    - LogStash는 실시간 파이프라인 기능을 갖춘 오픈 소스 데이터 수집 엔진이다 LogStash는 서로 다른 소스의 데이터를 동적으로 통합하고 해당 데이터를 원하는 대상으로 정규화할 수 있다
+75. 각 서비스 및 게이트웨이에 log를 위한 xml 추가
