@@ -17,6 +17,10 @@ spring:
       discovery.locator:
         enabled: true
         lowerCaseServiceId: true
+#    슬루스가 Micrometer Tracing으로 바뀜으로 인해 검사하지 않도록 추가 
+#    나중에 Micrometer Tracing 학습 필요
+    compatibility-verifier:
+      enabled: false
 #  키클록 관련
   security:
     oauth2:

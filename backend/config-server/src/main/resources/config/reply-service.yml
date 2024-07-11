@@ -26,6 +26,12 @@ spring:
           jwk-set-uri: http://localhost:8080/auth/realms/simple-board-realm/protocol/openid-connect/certs
   #  카프카 세팅
   cloud:
+    #    슬루스가 Micrometer Tracing으로 바뀜으로 인해 검사하지 않도록 추가
+    #    나중에 Micrometer Tracing 학습 필요
+    compatibility-verifier:
+      enabled: false
+
+
     function:
       definition: userConsumer;
     stream:
